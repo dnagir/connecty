@@ -17,3 +17,11 @@ No specific requirement for a web site to use Connecty.
 Server running Connecty is Rails 3 compatible with RDBMS.
 
 
+License
+=================
+MIT
+
+Authors
+=================
+Supported and sponsored by [PropConnect Pty Ltd](http://propconnect.com)
+Maintener: [Dmytrii Nagirniak](http://ApproachE.com)

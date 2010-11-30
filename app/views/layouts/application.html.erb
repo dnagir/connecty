@@ -7,9 +7,10 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+  <%= render 'flash' =>
 
-<%= yield %>
+  <%= yield %>
 
-<%= connecty_install_script(12345).html_safe %>
+  <%= connecty_install_script(12345).html_safe %>
 </body>
 </html>
