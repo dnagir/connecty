@@ -89,7 +89,6 @@ describe ProjectsController do
     end
 
     it 'should list suggestions' do
-      puts "------>  #{project.suggestions}"
       result.should have_selector('div.suggestion', :count => 3)
     end
     
@@ -132,7 +131,9 @@ describe ProjectsController do
 
       it { result.should be_successful }
       
-      it { result.should have_selector('pre') }
+      it 'should have installation code' do
+        result.should have_selector('pre')
+      end
 
     end
 

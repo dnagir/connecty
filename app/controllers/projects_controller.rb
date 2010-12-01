@@ -17,9 +17,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @suggestions = @project.suggestions
     @suggestion = Suggestion.new
-    render :layout => 'inline' if params[:inline] == 'true'
   end
 
 

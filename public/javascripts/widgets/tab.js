@@ -1,20 +1,10 @@
 var Connecty = function(){
   var $ = jQuery;
-
-  var PRODUCTION_HOSTING_DOMAIN = 'localhost:3000';
+  var options = ConnectyOptions;  
 
   var getTabUrl = function() {
-    var protocol = "https:" == document.location.protocol ? "https://" : "http://";
-    return protocol + PRODUCTION_HOSTING_DOMAIN + "/projects/" + getProjectId() + "?inline=true";
+    return options.project + "?inline=true";
   }
-
-  var getProjectId = function() {
-    var el = document.getElementById('connecty-script-init');
-    if (!el) alert('Connecty incorrectly initialised. Must have script with id.');
-    var id = el.src.match(/project=(\d+)/)[1];
-    if (!id) alert('Connecty incorrectly initialised. Must have script with src="?project=123"');
-    return id;
-  };
 
   var hideTab = function() {
     $('.connecty-tab-area-overlay, .connecty-tab-area').remove();
@@ -36,12 +26,13 @@ var Connecty = function(){
       .find('.connecty-tab-tool-close').click(function(e) { e.preventDefault(); hideTab(); });
   };
 
-  $(document).ready(function(){
-
-    $("<div class='connecty-tab-box'><a href='#' class='connecty-tab-content connecty-tab-trigger'>Feedback</a></div>")
-      .appendTo('body').find('.connecty-tab-trigger').click(function(e) {
-        e.preventDefault();
-        openTab()
-      });
-  });
+  if (options && options.project) {
+    $(document).ready(function(){
+      $("<div class='connecty-tab-box'><a href='#' class='connecty-tab-content connecty-tab-trigger'>Feedback</a></div>")
+        .appendTo('body').find('.connecty-tab-trigger').click(function(e) {
+          e.preventDefault();
+          openTab()
+        });
+    });
+  }
 }();

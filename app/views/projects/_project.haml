@@ -1,0 +1,9 @@
+-@title = @project.name
+= semantic_form_for [@project, @suggestion] do |f|
+  = f.inputs do
+    = hidden_field_tag 'inline', params[:inline]
+    = f.input :content, :label => 'I want to...', :hint => 'enter a suggestion you might have', :input_html => { :autofocus => true}
+    = f.buttons
+
+.suggestions
+  = render @project.suggestions
