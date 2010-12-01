@@ -1,0 +1,8 @@
+%h1= @project.name
+= semantic_form_for [@project, @suggestion] do |f|
+  = f.inputs do
+    = f.input :content, :label => 'I want to...', :hint => 'enter a suggestion you might have'
+    = f.buttons
+
+.suggestions
+  = render @suggestions

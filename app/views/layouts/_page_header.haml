@@ -1,0 +1,14 @@
+%title= "#{[@title, @subtitle, 'Connecty'].compact.join(' - ')}"
+%meta(charset='UTF-8')
+%meta(name="description" content="Instant customer feedback for a web site")
+%meta(name="keywords" content="feedback, web, application, in-place")
+%meta(name="author" content="Dmytrii Nagirniak")
+
+= csrf_meta_tag
+
+= formtastic_stylesheet_link_tag
+= stylesheet_link_tag 'application'
+
+/[if IE] <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+%script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js')
+= javascript_include_tag 'rails', 'application'

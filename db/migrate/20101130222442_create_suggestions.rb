@@ -2,7 +2,7 @@ class CreateSuggestions < ActiveRecord::Migration
   def self.up
     create_table :suggestions do |t|
       t.string :content
-      t.integer :votes
+      t.integer :votes, :default => 0
 
       t.references :project
 

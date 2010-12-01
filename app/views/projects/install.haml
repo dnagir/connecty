@@ -1,0 +1,12 @@
+%h1 Installation instructions
+:markdown
+  In order for your users to provide feedback not leaving your site you need to install the code below.
+
+  Just copy it and paste into your web site.
+
+  *Techy note:* The code below assumes that your web site uses jQuery library. If it does NOT, then uncomment the appropriate line.
+
+%pre
+  = connecty_install_script(@project.id)
+
+= link_to 'Proceed to the project', project_path(@project)

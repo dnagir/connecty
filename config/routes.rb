@@ -1,9 +1,12 @@
 Connecty::Application.routes.draw do
- 
-  
-  
   
   devise_for :users
+  resources :projects do
+    member do
+      get 'install'
+    end
+    resources :suggestions
+  end
 
   root :to => "pages#index"
   match '/:action', :controller => 'pages', :as => :page

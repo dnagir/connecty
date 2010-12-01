@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20101130223642) do
 
   create_table "suggestions", :force => true do |t|
     t.string   "content"
-    t.integer  "votes"
+    t.integer  "votes",      :default => 0
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
