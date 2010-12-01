@@ -6,8 +6,9 @@
 <body>
   <%= render 'layouts/flash' %>
 
+  <h1><%= @title %></h1>
   <%= yield %>
 
-  <%= connecty_install_script(12345).html_safe %>
+  <%= connecty_install_script(Project.first).html_safe %>
 </body>
 </html>

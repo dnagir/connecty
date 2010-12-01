@@ -1,4 +1,5 @@
-%h1 Installation instructions
+- @title = "Installation instructions for #{@project.name}"
+
 :markdown
   In order for your users to provide feedback not leaving your site you need to install the code below.
 
@@ -7,6 +8,6 @@
   *Techy note:* The code below assumes that your web site uses jQuery library. If it does NOT, then uncomment the appropriate line.
 
 %pre
-  = connecty_install_script(@project.id)
+  = connecty_install_script(@project)
 
 = link_to 'Proceed to the project', project_path(@project)
