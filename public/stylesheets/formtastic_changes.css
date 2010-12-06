@@ -12,3 +12,14 @@ The following style may be *conditionally* included for improved support on olde
 form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 
 --------------------------------------------------------------------------------------------------*/
+
+
+form.formtastic fieldset ol li p.inline-hints {
+  margin-top: 0;
+  font-size: 0.8em;
+  font-style: italic;
+}
+form.formtastic fieldset ol li p.inline-errors {
+  margin-top: 0;
+  font-size: 0.8em;
+}

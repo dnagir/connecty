@@ -171,32 +171,6 @@ describe ProjectsController do
 
 
 
-  describe '#index' do
-    it 'should ask to log-in' do
-      sign_out :user
-      get(:index).should redirect_to new_user_session_url
-    end
-
-    context 'as logged-in user' do
-      before do
-        sign_in me
-      end
-
-      it 'should list all user projects' do
-        3.times { Factory.create(:project, :users => [me]) }
-        get(:index).should have_selector('.project', :count => 3)
-      end
-
-      it 'should not list projects of other users' do
-        3.times { Factory.create(:project) }
-        get(:index).should_not have_selector('.project')
-      end
-
-    end
-
-  end
-
-
 
   describe '#invite' do
     def result

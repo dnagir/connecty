@@ -7,7 +7,8 @@
 = csrf_meta_tag
 
 = formtastic_stylesheet_link_tag
-= stylesheet_link_tag 'application'
+= stylesheet_link_tag 'style', 'custom_scaffold', 'application', :cache => true
+= stylesheet_link_tag 'print', :media => 'print'
 
 /[if IE] <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 %script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js')

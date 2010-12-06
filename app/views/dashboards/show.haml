@@ -1,4 +1,8 @@
 - @title = "Dashboard"
+= content_for(:context) do
+  %nav
+    %ul
+      %li= link_to 'New Project', new_project_path
 - @projects.each do |project|
   .project
     %h2= link_to project.name, project_path(project)

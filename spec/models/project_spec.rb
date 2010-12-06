@@ -6,6 +6,10 @@ describe Project do
     it { should have_many(:project_participations).dependent(:destroy) }
     it { should have_many(:suggestions).dependent(:destroy) }
   end
+  
+  describe 'basic validation' do
+    it { should ensure_length_of(:name).is_at_least(3).is_at_most(25) }
+  end
 
   describe 'invitation' do
     subject { Factory(:project) }

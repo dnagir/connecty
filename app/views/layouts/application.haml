@@ -1,0 +1,41 @@
+!!!
+%html
+  %head
+    = render 'layouts/page_header'
+    %link{:href => "http://fonts.googleapis.com/css?family=IM+Fell+Double+Pica", :rel => "stylesheet", :type => "text/css"}
+  %body
+    #container
+      %header
+        #headline
+          %h1
+            - if user_signed_in?
+              - if @project && !@project.new_record?
+                = link_to @project.name, project_path(@project)
+              - else
+                = link_to 'Easy user feedback', dashboard_path
+            - else
+              = link_to 'Easy user feedback', root_path
+      #main
+        = render 'layouts/flash'
+        - if not @title.blank?
+          %h1= @title
+        %section
+          = yield
+        - if content_for?(:context)
+          %section.context-wrapper
+            = yield(:context)
+    %footer
+      %ul
+        %li
+          %a{:href => "http://github.com/dnagir/connecty", :title => "source code"} @github
+        %li
+          %a{:href => "http://propconnect.com", :title => "sponsored by"} PropConnect Pty Ltd
+        %li
+          %a{:href => "http://ApproachE.com", :title => "maintaner"} Dmytrii Nagirniak
+        - if user_signed_in?
+          %li= link_to 'Sign Out', destroy_user_session_path
+          %li= link_to 'Dashboard', dashboard_path
+        - else
+          %li= link_to 'Sign In', new_user_session_path
+    = connecty_install_script(Project.first).html_safe
+    / Free template downloaded from http://freehtml5templates.com

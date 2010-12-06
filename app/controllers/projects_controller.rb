@@ -30,10 +30,6 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])    
   end
 
-  def index
-    @projects = current_user.projects
-  end
-
   def invite
     @project = Project.find(params[:id])
     email = (params[:user] || {})[:email]
