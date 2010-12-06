@@ -12,4 +12,6 @@ class SuggestionsController < ApplicationController
     end
   end
 
+  def edit    
+  end
 end

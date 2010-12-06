@@ -9,6 +9,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'devise'
 gem 'formtastic'
+gem "cancan"
 
 group :test do
   gem 'webrat', '0.7.1' # https://github.com/rspec/rspec-rails/issues#issue/140

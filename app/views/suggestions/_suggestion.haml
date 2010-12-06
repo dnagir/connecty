@@ -3,5 +3,8 @@
     .up +
     .current= suggestion.votes
     .down -
-  %h5= suggestion.content
+  %h5{:title => suggestion.status }= suggestion.content
+  - if not suggestion.new_record? and can? :manage, suggestion
+    .actions
+      %a.edit{:href=>edit_project_suggestion_path(suggestion.project, suggestion)} edit
   .clear
