@@ -18,7 +18,7 @@ module ApplicationHelper
       -->
       <script type='text/javascript'>
         ConnectyOptions = {
-          project: '#{project_url(project)}'
+          project: '#{inline_project_url(project)}'
         };
       </script>
       <script id='connecty-script-init' type="text/javascript" src='#{connecty_javascript_url}'></script>

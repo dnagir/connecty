@@ -4,6 +4,7 @@ describe ProjectsController do
   render_views
 
   let(:me) { Factory(:user) }
+  let(:project) { Factory.create(:project) }
 
   describe '#new' do
     def result
@@ -57,12 +58,7 @@ describe ProjectsController do
       it 'should create a project' do
         expect {
           result();
-        }.to change { Project.count }.by(1)
-      end
-
-      it 'should add project to myself' do
-        result()
-        me.reload.should have(1).project
+        }.to change { me.projects(true).count }.by(1)
       end
 
       it 'should redirect to the install instructions' do
@@ -74,6 +70,7 @@ describe ProjectsController do
 
 
 
+
   describe '#show' do
     let(:project) do
       Factory.create(:project).tap do |p|
@@ -82,6 +79,44 @@ describe ProjectsController do
     end
     def result(more = {})
       get :show, { :id => project.id }.merge(more)
+    end
+
+    it 'should ask to log-in' do
+      sign_out :user
+      result.should redirect_to new_user_session_url
+    end
+
+    context 'as logged-in user' do
+      before do
+        sign_in me
+      end
+
+      it 'should show project name' do
+        result.should contain project.name
+      end
+
+      it 'should list suggestions' do
+        result.should have_selector('div.suggestion', :count => 3)
+      end
+      
+
+      it 'should use default template' do
+        result.should render_template(:application)
+      end
+    end
+
+  end
+
+
+
+  describe '#inline' do
+    let(:project) do
+      Factory.create(:project).tap do |p|
+        3.times { Factory.create(:suggestion, :project => p) }
+      end
+    end
+    def result(more = {})
+      get :inline, { :id => project.id }.merge(more)
     end
 
     it 'should show project name' do
@@ -96,19 +131,14 @@ describe ProjectsController do
       result.should have_selector("form[action='#{project_suggestions_path(project.id)}']")
     end
 
-    it 'should use default template' do
-      result.should render_template(:application)
-    end
-
-    context 'inline' do
-      it { result(:inline=>'true').should render_template(:inline) }
+    it 'should use inline template' do
+      result.should render_template(:inline)
     end
 
   end
 
 
   describe '#install' do
-    let(:project) { Factory.create(:project) }
     def result
       get :install, :id => project.id
     end
@@ -138,4 +168,67 @@ describe ProjectsController do
     end
 
   end
+
+
+
+  describe '#index' do
+    it 'should ask to log-in' do
+      sign_out :user
+      get(:index).should redirect_to new_user_session_url
+    end
+
+    context 'as logged-in user' do
+      before do
+        sign_in me
+      end
+
+      it 'should list all user projects' do
+        3.times { Factory.create(:project, :users => [me]) }
+        get(:index).should have_selector('.project', :count => 3)
+      end
+
+      it 'should not list projects of other users' do
+        3.times { Factory.create(:project) }
+        get(:index).should_not have_selector('.project')
+      end
+
+    end
+
+  end
+
+
+
+  describe '#invite' do
+    def result
+      get(:invite, :id => project.id)
+    end
+    def do_invite
+      email = Factory(:user).email
+      post :invite, :id => project.id, :user => { :email => email}
+    end
+
+    it 'should ask to log-in' do
+      result.should redirect_to new_user_session_url
+    end
+
+    context 'as logged-in user' do
+      before do
+        sign_in me
+      end
+
+      it 'should render form with emails' do
+        result.should have_selector('form') do |f|
+          f.should have_selector('input[name="user[email]"]')
+          f.should have_selector('input[type="submit"]')
+        end
+      end
+
+      it 'should redirect to project after adding' do
+        do_invite.should redirect_to project_url(project)
+      end
+
+    end
+  end
+
+
 end

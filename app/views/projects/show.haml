@@ -1,1 +1,10 @@
-= render @project
+-@title = @project.name
+= content_for(:context) do
+  %ul
+    %li= link_to "<< Back to Projects", projects_path
+    %li= link_to "Invite to project", invite_project_path(@project)
+    %li= link_to "Install Instructions", install_project_path(@project)
+
+.project-view
+  .suggestions
+    = render @project.suggestions

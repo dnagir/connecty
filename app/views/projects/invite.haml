@@ -1,0 +1,6 @@
+- @title = "Invite people to #{@project.name}"
+= semantic_form_for @user, :url => invite_project_path(@project) do |f|
+  = f.inputs do
+    = f.input :email
+    = f.buttons do
+      = f.commit_button :label => 'Invite the user'

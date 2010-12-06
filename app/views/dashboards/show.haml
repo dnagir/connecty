@@ -1,0 +1,5 @@
+- @title = "Dashboard"
+- @projects.each do |project|
+  .project
+    %h2= link_to project.name, project_path(project)
+

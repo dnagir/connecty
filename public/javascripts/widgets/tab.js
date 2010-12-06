@@ -3,7 +3,7 @@ var Connecty = function(){
   var options = ConnectyOptions;  
 
   var getTabUrl = function() {
-    return options.project + "?inline=true";
+    return options.project;
   }
 
   var hideTab = function() {
@@ -16,7 +16,7 @@ var Connecty = function(){
     $('<div class="connecty-tab-area-overlay"></div>').appendTo('body');
 
     var $content = $('<div class="connecty-tab-area-content">').append(
-      $('<iframe scrolling="yes" frameborder="0" allowtransparency="true"></iframe></div>').attr('src', getTabUrl())
+      $('<iframe scrolling="yes" frameborder="0" allowtransparency="true"></iframe>').attr('src', getTabUrl())
     );
     var $tools = $("<div class='connecty-tab-area-toolbar'><a href='#' class='connecty-tab-tool-close'><span>Close</span></a></div>");
     $('<div class="connecty-tab-area"></div>')

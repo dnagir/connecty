@@ -1,15 +1,21 @@
 Connecty::Application.routes.draw do
   
+  resource :dashboard
+
   devise_for :users
+  match 'dashboard' => 'dashboard#show', :as => 'user_root' # Devise redirect on Sign-In
+
   resources :projects do
     member do
       get 'install'
+      get 'inline'
+      match 'invite', :via => [:get, :post]
     end
     resources :suggestions
   end
 
   root :to => "pages#index"
-  match '/:action', :controller => 'pages', :as => :page
+  # match '/:action', :controller => 'pages', :as => :page
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

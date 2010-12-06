@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :authenticate_user!, :except => :show
+  before_filter :authenticate_user!, :except => :inline
 
   def new
     @project = Project.new
@@ -20,8 +20,29 @@ class ProjectsController < ApplicationController
     @suggestion = Suggestion.new
   end
 
+  def inline
+    @project = Project.find(params[:id])
+    @suggestion = Suggestion.new
+    params[:inline] = 'true'
+  end
 
   def install
     @project = Project.find(params[:id])    
+  end
+
+  def index
+    @projects = current_user.projects
+  end
+
+  def invite
+    @project = Project.find(params[:id])
+    email = (params[:user] || {})[:email]
+
+    if @user = @project.invite_user(email)
+      redirect_to project_url(@project), :notice => 'User has been invited!'
+    end
+    @user = User.new.tap do |u| 
+      u.errors[:email] = 'enter an email of a user that is already registered here'
+    end unless @user
   end
 end
