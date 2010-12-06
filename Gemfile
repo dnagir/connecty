@@ -15,6 +15,7 @@ group :test do
   gem 'webrat', '0.7.1' # https://github.com/rspec/rspec-rails/issues#issue/140
   gem 'shoulda'
   gem 'factory_girl_rails'
+  gem 'rcov'
 end
 
 group :development, :test do
