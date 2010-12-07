@@ -8,7 +8,7 @@ describe Suggestion do
   its(:votes) { should == 0 }
   it { should validate_presence_of(:project_id) }
   it { should ensure_length_of(:content).is_at_least(3).is_at_most(120) }
-  its(:status) { should == 'open' }
+  its(:status) { should == :open }
 
   describe 'voting' do
     let(:project) { Factory(:project) }

@@ -1,4 +1,5 @@
 class SuggestionsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:new, :create, :vote]
 
   def create
     @project = Project.find(params[:project_id])    
@@ -15,7 +16,18 @@ class SuggestionsController < ApplicationController
   end
 
   def edit    
+    @suggestion = Suggestion.find(params[:id])
   end
+
+  def update
+    @suggestion = Suggestion.find(params[:id])
+    if @suggestion.update_attributes(params[:suggestion])
+      redirect_to project_url(@suggestion.project), :notice => 'Successfully updated.'
+    else
+      render :edit
+    end
+  end
+
 
   def vote
     @suggestion = Suggestion.find(params[:suggestion_id])

@@ -73,5 +73,61 @@ describe SuggestionsController do
   end
 
 
+  context 'with user' do
+    let(:me) { Factory(:user) }
+    let(:project) { Factory(:project, :users => [me]) }
+    subject { Factory(:suggestion, :project => project) }
+    before do
+      sign_in me
+    end
+
+    describe 'editing' do
+      def edit
+        get(:edit, :project_id=>project.id, :id=>subject.id)
+      end
+
+      it 'should show form' do
+        edit.should have_selector('form') do |f|
+          f.should have_selector("input[name='suggestion[content]']")
+        end
+      end
+
+    end
+
+
+
+    describe 'updating' do
+      def update(attrs={})
+        post(:update, :project_id=>project.id, :id=>subject.id, :suggestion=>Factory.attributes_for(:suggestion, attrs))
+        assigns(:suggestion)
+      end
+      
+      it 'should ask to log-in' do
+        sign_out :user
+        update
+        response.should redirect_to new_user_session_url
+      end
+
+      context 'by a stranger' do
+        let(:me) { Factory(:user) }
+        it 'should not allow' do
+          pending
+          update
+          response.should redirect_to new_user_session_url
+        end
+      end
+      
+      it 'should redirect to project' do
+        update
+        response.should redirect_to project_url(project)
+      end
+
+      it 'should update attributes' do
+        update(:status=>:done).status.should == :done
+      end
+    end
+
+  end
+
 
 end

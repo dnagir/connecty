@@ -1,1 +1,6 @@
--@title = 'Comming soon...'
+-@title = @suggestion.content_brief
+= semantic_form_for [@suggestion.project, @suggestion] do |f|
+  = f.inputs do
+    = f.input :content
+    = f.input :status, :collection => Suggestion::STATUSES
+  = f.buttons
