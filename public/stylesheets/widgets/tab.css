@@ -1,6 +1,7 @@
 .connecty-tab-box {
   position: fixed;
   left: -27px;
+  _left: 2px; /* IE */
   top: 45%;
   display: block;
   border: 1px solid gray;
