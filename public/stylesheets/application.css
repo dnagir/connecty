@@ -79,9 +79,30 @@ div, section, article { padding: 0; margin: 0;}
   }
   .suggestions .suggestion .voting {
     float: left;
-    width: 50px;
+    width: 70px;
     height: 50px;
   }
+    .suggestions .suggestion .voting .current {
+      border-right: 1px solid gray;
+      width: 2em;
+      float: right;
+      text-align: right;
+      line-height: 50px;
+      margin-right: 5px;
+      font-size: 1.2em;
+    }
+    .suggestions .suggestion .voting .up,
+    .suggestions .suggestion .voting .dn {
+      display: block;
+      width: 25px;
+      height: 25px;
+    }
+      .suggestions .suggestion .voting .up img,
+      .suggestions .suggestion .voting .dn img {      
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
   .suggestions .suggestion h5 {
     float: left;
     width: 500px;

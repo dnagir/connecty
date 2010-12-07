@@ -1,8 +1,12 @@
 .suggestion
   .voting{:title=>'Votes'}
-    .up{:title=>'Like it!'}= link_to '+', suggestion_vote_path(suggestion.project, suggestion, :value=>1, :inline=>inline)
     .current= suggestion.votes
-    .down{:title=>'Hate It!'}= link_to '-', suggestion_vote_path(suggestion.project, suggestion, :value=>-1, :inline=>inline)
+    .up{:title=>'Like it!'}
+      %a{:href=>suggestion_vote_path(suggestion.project, suggestion, :value=>1, :inline=>inline)}
+        %img{:alt=>'+', :src=> image_path('app/vote-up.png')}
+    .dn{:title=>'Hate It!'}
+      %a{:href=>suggestion_vote_path(suggestion.project, suggestion, :value=>-1, :inline=>inline)}
+        %img{:alt=>'-', :src=> image_path('app/vote-dn.png')}
   %h5{:title => suggestion.status }= suggestion.content
   - if not suggestion.new_record? and can? :manage, suggestion
     .actions
