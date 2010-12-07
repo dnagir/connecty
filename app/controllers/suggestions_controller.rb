@@ -4,9 +4,8 @@ class SuggestionsController < ApplicationController
     @project = Project.find(params[:project_id])
     @suggestion = @project.suggestions.build(params[:suggestion])
     if @suggestion.save
-      additional = {}
-      additional[:inline] = params[:inline] if params[:inline] == 'true'
-      redirect_to project_path(@project, additional), :notice => 'Thanks. We appreciate your feedback.'
+      redirecting_to = params[:inline] == 'true' ? inline_project_url(@project) : project_path(@project)
+      redirect_to redirecting_to, :notice => 'Thanks. We appreciate your feedback.'
     else
       render :new
     end
