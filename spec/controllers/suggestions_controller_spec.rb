@@ -19,7 +19,7 @@ describe SuggestionsController do
       do_create.should redirect_to project_path(project)
     end
     it 'should redirect preserving inline option' do
-      do_create(true).should redirect_to project_path(project, :inline => 'true')
+      do_create(true).should redirect_to inline_project_path(project)
     end
 
 
