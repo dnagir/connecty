@@ -33,6 +33,9 @@ var Connecty = function(){
           e.preventDefault();
           openTab()
         });
+      // trickery, shmickery - move roteted box to the left
+      var boxWidth = $('.connecty-tab-box').width();
+      $('.connecty-tab-box').css('left', - boxWidth / 2 + 10);
     });
   }
 }();
