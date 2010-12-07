@@ -7,8 +7,9 @@
     .dn{:title=>'Hate It!'}
       %a{:href=>suggestion_vote_path(suggestion.project, suggestion, :value=>-1, :inline=>inline)}
         %img{:alt=>'-', :src=> image_path('app/vote-dn.png')}
-  %h5{:title => suggestion.status }= suggestion.content
-  - if not suggestion.new_record? and can? :manage, suggestion
-    .actions
-      %a.edit{:href=>edit_project_suggestion_path(suggestion.project, suggestion)} edit
+  %h5{:title => suggestion.status }
+    - if can? :manage, suggestion
+      %a.edit{:href=>edit_project_suggestion_path(suggestion.project, suggestion)}= suggestion.content
+    - else
+      = suggestion.content
   .clear
