@@ -46,4 +46,32 @@ describe SuggestionsController do
 
   end
 
+
+
+  describe 'voting' do
+    let(:project) { Factory(:project) }
+    subject { Factory(:suggestion, :project => project) }
+
+    def vote(value, more = {})
+      post(:vote, more.merge(:project_id => subject.project.id, :suggestion_id => subject.id, :value => value))
+    end
+
+    it 'should redirect to project if not inline' do
+      vote(1).should redirect_to project_url(project)
+    end
+
+    it 'should redirect to inline if inline' do
+      vote(-1, :inline => 'true').should redirect_to inline_project_url(project)
+    end
+
+    it 'should vote on suggestion' do
+      expect {
+        vote(1)
+      }.to change { subject.reload.votes }.by(1)
+    end
+
+  end
+
+
+
 end

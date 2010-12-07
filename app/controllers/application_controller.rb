@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
   protected
     def pick_layout
-      params[:inline] == 'true' ? 'inline' : 'application'
+      inline? ? 'inline' : 'application'
     end
+
+    def inline?
+      params[:inline] == 'true'
+    end
+
 end

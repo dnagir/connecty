@@ -1,5 +1,10 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!, :except => :inline
+  before_filter :only => [:show, :inline] do
+    @project = Project.find(params[:id])
+    @suggestion = Suggestion.new
+    @suggestions = @project.suggestions.most_voted
+  end
 
   def new
     @project = Project.new
@@ -16,13 +21,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
-    @suggestion = Suggestion.new
   end
 
   def inline
-    @project = Project.find(params[:id])
-    @suggestion = Suggestion.new
     params[:inline] = 'true'
   end
 

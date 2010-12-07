@@ -1,8 +1,8 @@
 .suggestion
-  .voting
-    .up +
+  .voting{:title=>'Votes'}
+    .up{:title=>'Like it!'}= link_to '+', suggestion_vote_path(suggestion.project, suggestion, :value=>1, :inline=>inline)
     .current= suggestion.votes
-    .down -
+    .down{:title=>'Hate It!'}= link_to '-', suggestion_vote_path(suggestion.project, suggestion, :value=>-1, :inline=>inline)
   %h5{:title => suggestion.status }= suggestion.content
   - if not suggestion.new_record? and can? :manage, suggestion
     .actions

@@ -74,7 +74,7 @@ describe ProjectsController do
   describe '#show' do
     let(:project) do
       Factory.create(:project).tap do |p|
-        3.times { Factory.create(:suggestion, :project => p) }
+        3.times { |n| Factory.create(:suggestion, :votes => n, :project => p) }
       end
     end
     def result(more = {})
@@ -99,6 +99,11 @@ describe ProjectsController do
         result.should have_selector('div.suggestion', :count => 3)
       end
       
+      it 'should order suggestions' do
+        result.should have_selector('div.suggestion .voting .current') do |v|
+          v.map(&:text).map(&:to_i).should == [2,1,0]
+        end
+      end
 
       it 'should use default template' do
         result.should render_template(:application)
@@ -112,7 +117,7 @@ describe ProjectsController do
   describe '#inline' do
     let(:project) do
       Factory.create(:project).tap do |p|
-        3.times { Factory.create(:suggestion, :project => p) }
+        3.times { |n| Factory.create(:suggestion, :votes => n, :project => p) }
       end
     end
     def result(more = {})
@@ -125,6 +130,18 @@ describe ProjectsController do
 
     it 'should list suggestions' do
       result.should have_selector('div.suggestion', :count => 3)
+    end
+
+    it 'should order suggestions' do
+      result.should have_selector('div.suggestion .voting .current') do |v|
+        v.map(&:text).map(&:to_i).should == [2,1,0]
+      end
+    end
+
+    it 'suggestions votes should be inline' do
+      result.should have_selector('div.suggestion .up a, div.suggestion .dn a') do |s|
+        s.attribute('href').should contain('inline')
+      end
     end
     
     it 'should have suggestion form' do

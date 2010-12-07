@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def inline
+    params[:inline] == 'true' ? true : false
+  end
+
   def connecty_css_url
     uri = URI.parse(request.url)
     uri.merge(javascript_path('/stylesheets/widgets/tab.css'))

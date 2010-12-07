@@ -11,7 +11,9 @@ Connecty::Application.routes.draw do
       get 'inline'
       match 'invite', :via => [:get, :post]
     end
-    resources :suggestions
+    resources :suggestions do
+      match 'vote', :via => [:get, :post]
+    end
   end
 
   root :to => "pages#index"
