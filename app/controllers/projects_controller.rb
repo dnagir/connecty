@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
   end
 
   def inline
+    @suggestions = @suggestions.published
     params[:inline] = 'true'
   end
 

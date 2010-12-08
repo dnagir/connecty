@@ -1,4 +1,4 @@
-.suggestion
+.suggestion{:class=>suggestion.status}
   .voting{:title=>'Votes'}
     .current= suggestion.votes
     .up{:title=>'Like it!'}
@@ -7,7 +7,7 @@
     .dn{:title=>'Hate It!'}
       %a{:href=>suggestion_vote_path(suggestion.project, suggestion, :value=>-1, :inline=>inline)}
         %img{:alt=>'-', :src=> image_path('app/vote-dn.png')}
-  %h5{:title => suggestion.status }
+  %h5{:title => suggestion.status_readable }
     - if can? :manage, suggestion
       %a.edit{:href=>edit_project_suggestion_path(suggestion.project, suggestion)}= suggestion.content
     - else

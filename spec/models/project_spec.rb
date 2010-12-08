@@ -24,4 +24,28 @@ describe Project do
       subject.users(true).should include(user1)
     end
   end
+
+  describe 'suggestions' do
+    let(:project) { Factory.create(:project) }
+    def with_status(status)
+      Factory.create(:suggestion, :status => status, :project => project)
+      project.suggestions.published
+    end
+
+    def suggestion
+      project.suggestions.first
+    end
+
+    context '#published' do      
+      it 'should appear when open' do
+        with_status(:open).should include(suggestion)
+      end
+      it 'should appear when in_progress' do
+        with_status(:in_progress).should include(suggestion)
+      end
+      it 'should not appear when done' do
+        with_status(:done).should_not include(suggestion)
+      end
+    end
+  end
 end

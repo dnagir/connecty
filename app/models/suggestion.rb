@@ -6,6 +6,18 @@ class Suggestion < ActiveRecord::Base
 
   STATUSES = [:open, :in_progress, :done]
 
+  scope :published, where(:status => [:open, :in_progress])
+  scope :most_voted, order('votes DESC')
+
+  def self.statuses_readable
+    STATUSES.inject({}) {|all, sym| all[status_name_for(sym)] = sym; all }
+  end
+
+  def self.status_name_for(it)
+    return 'N/A' unless it
+    it.to_s.humanize
+  end
+
   def status
     read_attribute(:status).to_sym
   end
@@ -15,6 +27,9 @@ class Suggestion < ActiveRecord::Base
     write_attribute(:status, value.to_s)
   end
 
+  def status_readable
+    Suggestion.status_name_for(status)
+  end
 
   def vote(value)
     return true if not value or value == 0

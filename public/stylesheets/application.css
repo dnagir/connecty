@@ -77,6 +77,14 @@ div, section, article { padding: 0; margin: 0;}
 
     height: 50px;
   }
+    .suggestions .suggestion.in_progress {      
+      color: #1E801B;
+    }
+    .suggestions .suggestion.done {
+      font-style: italic;
+      color: gray;
+    }
+
   .suggestions .suggestion .voting {
     float: left;
     width: 70px;

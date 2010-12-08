@@ -138,6 +138,11 @@ describe ProjectsController do
       end
     end
 
+    it 'should not show finished suggestions' do
+      done = Factory(:suggestion, :status => :done, :project => project)
+      result.should_not contain(done.content)
+    end
+
     it 'suggestions votes should be inline' do
       result.should have_selector('div.suggestion .up a, div.suggestion .dn a') do |s|
         s.attribute('href').should contain('inline')
