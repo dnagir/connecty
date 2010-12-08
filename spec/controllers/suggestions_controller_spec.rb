@@ -105,15 +105,16 @@ describe SuggestionsController do
       it 'should ask to log-in' do
         sign_out :user
         update
-        response.should redirect_to new_user_session_url
+        response.should require_authentication
       end
 
-      context 'by a stranger' do
-        let(:me) { Factory(:user) }
+      context 'by another user' do
+        before do
+          sign_in Factory(:user)
+        end
         it 'should not allow' do
-          pending
           update
-          response.should redirect_to new_user_session_url
+          response.should deny_access
         end
       end
       

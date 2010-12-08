@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
       params[:inline] == 'true'
     end
 
+    rescue_from CanCan::AccessDenied do |exception|
+      flash[:alert] = exception.message
+      redirect_to root_url # redirect to a page that has no redirects to preserve the flash message
+    end
 end

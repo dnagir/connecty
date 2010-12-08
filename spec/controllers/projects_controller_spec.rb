@@ -4,7 +4,7 @@ describe ProjectsController do
   render_views
 
   let(:me) { Factory(:user) }
-  let(:project) { Factory.create(:project) }
+  let(:project) { Factory.create(:project, :users => [me]) }
 
   describe '#new' do
     def result
@@ -17,7 +17,7 @@ describe ProjectsController do
       end
 
       it 'should ask to log-in' do
-        result.should redirect_to new_user_session_url
+        result.should require_authentication
       end
     end
 
@@ -29,6 +29,7 @@ describe ProjectsController do
       it 'should render form' do
         result.should have_selector("form[action='#{projects_path}']")
       end
+
     end
 
   end
@@ -45,7 +46,7 @@ describe ProjectsController do
       end
 
       it 'should ask to log-in' do
-        result.should redirect_to new_user_session_url
+        result.should require_authentication
       end
 
     end
@@ -73,7 +74,7 @@ describe ProjectsController do
 
   describe '#show' do
     let(:project) do
-      Factory.create(:project).tap do |p|
+      Factory.create(:project, :users => [me]).tap do |p|
         3.times { |n| Factory.create(:suggestion, :votes => n, :project => p) }
       end
     end
@@ -83,12 +84,17 @@ describe ProjectsController do
 
     it 'should ask to log-in' do
       sign_out :user
-      result.should redirect_to new_user_session_url
+      result.should require_authentication
     end
 
     context 'as logged-in user' do
       before do
         sign_in me
+      end
+
+      it 'should not see other projects' do
+        sign_in Factory(:user)
+        result.should deny_access
       end
 
       it 'should show project name' do
@@ -171,7 +177,7 @@ describe ProjectsController do
       end
 
       it 'should ask to log-in' do
-        result.should redirect_to new_user_session_url
+        result.should require_authentication
       end
 
     end
@@ -182,6 +188,11 @@ describe ProjectsController do
       end
 
       it { result.should be_successful }
+
+      it 'should not see other projects' do
+        sign_in Factory(:user)
+        result.should deny_access
+      end
       
       it 'should have installation code' do
         result.should have_selector('pre')
@@ -204,7 +215,7 @@ describe ProjectsController do
     end
 
     it 'should ask to log-in' do
-      result.should redirect_to new_user_session_url
+      result.should require_authentication
     end
 
     context 'as logged-in user' do

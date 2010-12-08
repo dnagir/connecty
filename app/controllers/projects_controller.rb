@@ -1,7 +1,9 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!, :except => :inline
+  load_and_authorize_resource :except => :inline
+
   before_filter :only => [:show, :inline] do
-    @project = Project.find(params[:id])
+    @project = @project || Project.find(params[:id])
     @suggestion = Suggestion.new
     @suggestions = @project.suggestions.most_voted
   end
@@ -29,11 +31,9 @@ class ProjectsController < ApplicationController
   end
 
   def install
-    @project = Project.find(params[:id])    
   end
 
   def invite
-    @project = Project.find(params[:id])
     email = (params[:user] || {})[:email]
 
     if @user = @project.invite_user(email)
