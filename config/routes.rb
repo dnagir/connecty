@@ -13,6 +13,7 @@ Connecty::Application.routes.draw do
     end
     resources :suggestions do
       match 'vote', :via => [:get, :post]
+      match 'pivotal_story', :via => [:get, :post]
     end
   end
 

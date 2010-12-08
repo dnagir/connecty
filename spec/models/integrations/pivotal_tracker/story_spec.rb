@@ -35,7 +35,6 @@ describe Integrations::PivotalTracker::Story do
           subject.should have(:no).errors_on(:project_id)
         end
       end
-
     end
 
   end

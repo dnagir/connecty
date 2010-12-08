@@ -9,20 +9,20 @@ class Integrations::PivotalTracker::Story
   validates_length_of :name, :within => 3..50
   validates_length_of :description, :within => 3..120
   validate do
-    errors.add(:project_id, "enter an id of project that you have access to") if errors.empty? and not do_get_project!
+    errors.add(:project_id, "enter an id of project that you have access to and/or check the email/password") if errors.empty? and not do_get_project!
   end
 
 
   attr_accessor :project_id, :name, :description, :email, :password
 
   def initialize(args={})
+    args ||= {}
     %w{project_id name description email password}.each do |what|
-      self.instance_variable_set("@#{what}", args[what.to_sym])
+      self.instance_variable_set("@#{what}", args[what])
     end
-    @project_id = args[:project_id]
   end
 
-  def create(user, suggestion, args)
+  def create(user)
     return false if not valid?
     do_create!    
   end
@@ -32,13 +32,15 @@ class Integrations::PivotalTracker::Story
       @project ||= begin
         PivotalTracker::Client.token(self.email, self.password) unless email.blank?
         PivotalTracker::Project.find(self.project_id)        
-      ensure
+      rescue
+        Rails.logger.error($!)
+        return nil
         #TODO do useful stuff and logging here
       end
     end
 
     def do_create!
-      story = do_get_project!stories.create(:name => self.name, :description => self.description, :story_type => 'feature')
+      story = do_get_project!.stories.create(:name => self.name, :description => self.description, :story_type => 'feature')
     ensure
       PivotalTracker::Client.token = nil
     end

@@ -3,6 +3,8 @@ require 'spec_helper'
 describe SuggestionsController do
   render_views
 
+  let(:me) { Factory(:user) }
+
   describe '#create' do
     let(:project) { Factory(:project) }
     def do_create(inline=false, attrs={})
@@ -74,7 +76,6 @@ describe SuggestionsController do
 
 
   context 'with user' do
-    let(:me) { Factory(:user) }
     let(:project) { Factory(:project, :users => [me]) }
     subject { Factory(:suggestion, :project => project) }
     before do
@@ -130,5 +131,52 @@ describe SuggestionsController do
 
   end
 
+  describe 'PivotalTracker' do    
+    let(:project) { Factory(:project, :users=>[me]) }
+    let(:suggestion) { Factory(:suggestion, :project => project) }
+    def valid_story
+      {'password'=>'123456', 'name'=>suggestion.content_brief, 'description'=>suggestion.content, 'email'=>me.email,'project_id'=>999}
+    end
+    def do_get
+      get(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id)
+    end
+    def do_create
+      post(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id, :integrations_pivotal_tracker_story => valid_story) 
+    end
+    before do
+      story = Integrations::PivotalTracker::Story.new(valid_story)
+      story.stub(:valid?).and_return(true)
+      story.stub(:do_create!).and_return(true)
+      Integrations::PivotalTracker::Story.stub(:new).and_return(story)
+    end
+
+    it 'should require user' do
+      sign_out :user
+      do_get.should require_authentication
+    end
+    it 'should require authorisation' do
+      sign_in Factory(:user)
+      do_get.should deny_access
+    end
+
+    it 'should render form' do
+      sign_in me
+      do_get.should have_selector('form')
+    end
+
+    it 'should prefil story' do
+      sign_in me
+      do_get
+      story = assigns(:story)
+      story.name.should == suggestion.content_brief
+      story.description.should == suggestion.content
+      story.email.should == me.email
+    end
+
+    it 'should redirect to edit suggestion' do
+      sign_in me
+      do_create.should redirect_to edit_project_suggestion_url(project, suggestion)
+    end
+  end
 
 end

@@ -1,4 +1,9 @@
 -@title = @suggestion.content_brief
+= content_for :context do
+  %h3 Actions
+  %nav
+    %ul
+      %li= link_to 'Copy to PivotalTracker', suggestion_pivotal_story_path(@suggestion.project, @suggestion)
 = semantic_form_for [@suggestion.project, @suggestion] do |f|
   = f.inputs do
     = f.input :content
