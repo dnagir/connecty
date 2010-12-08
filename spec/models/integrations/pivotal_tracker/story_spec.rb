@@ -4,11 +4,11 @@ describe Integrations::PivotalTracker::Story do
 
   def valid_story(args={})
     Integrations::PivotalTracker::Story.new({
-      :project_id=>1, 
-      :name=>'abcd', 
-      :description=>'a description', 
-      :email=>'user@example.com', 
-      :password=>'secret pwd'}.merge(args))
+      'project_id'=>1, 
+      'name'=>'abcd', 
+      'description'=>'a description', 
+      'email'=>'user@example.com', 
+      'password'=>'secret pwd'}.merge(args))
   end
 
   subject do
