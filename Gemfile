@@ -23,6 +23,10 @@ group :development, :test do
   gem 'autotest'
 end
 
+group :development, :production do
+  gem 'pivotal-tracker' # make sure it is not under test at all
+end
+
 
 # Use unicorn as the web server
 # gem 'unicorn'
