@@ -29,9 +29,9 @@ MIT
 
 Who is using?
 ================
-- (PropConnect Pty Ltd)[http://propconnect.com].
-- (Approach Excellence)[http://ApproachE.com].
-- (Author''s Blog)[http://blog.ApproachE.com].
+- [PropConnect Pty Ltd](http://propconnect.com).
+- [Approach Excellence](http://ApproachE.com).
+- [Blog of @dnagir](http://blog.ApproachE.com).
 
 
 Credits
