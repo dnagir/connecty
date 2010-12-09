@@ -10,6 +10,11 @@ How?
 3. That is it.
 
 
+Just show me
+============
+If you want to get the feel of it, we host the service at (connecty.heroku.com)[http://connecty.heroku.com].
+
+
 Requirements
 ==================
 A user must run a modern browser.
@@ -21,7 +26,15 @@ License
 =================
 MIT
 
-Authors
+
+Who is using?
+================
+- (PropConnect Pty Ltd)[http://propconnect.com].
+- (Approach Excellence)[http://ApproachE.com].
+- (Author''s Blog)[http://blog.ApproachE.com].
+
+
+Credits
 =================
-Supported and sponsored by [PropConnect Pty Ltd](http://propconnect.com)
-Maintener: [Dmytrii Nagirniak](http://ApproachE.com)
+Supported and sponsored by [PropConnect Pty Ltd](http://propconnect.com).
+Maintener: [Dmytrii Nagirniak](http://ApproachE.com).
