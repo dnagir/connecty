@@ -12,7 +12,7 @@ How?
 
 Just show me
 ============
-If you want to get the feel of it, we host the service at (connecty.heroku.com)[http://connecty.heroku.com].
+If you want to get the feel of it, we host the service at [connecty.heroku.com](http://connecty.heroku.com).
 
 
 Requirements
