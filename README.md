@@ -27,7 +27,9 @@ Run it yourself
     rails server
 
 You will also need to configure:
+
 - [Rails Mailer](http://guides.rubyonrails.org/action_mailer_basics.html#example-action-mailer-configuration)
+
 
 
 Requirements
