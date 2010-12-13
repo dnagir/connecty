@@ -86,56 +86,60 @@ div, section, article { padding: 0; margin: 0;}
  * Inline Suggestion form
  ***********************************
  */
-form#new_suggestion #suggestion_content_input {
-  padding: 0;
-  margin: 0;
-  text-align: center;
+form#new_suggestion .inputs {
+  overflow: visible;
 }
-  form#new_suggestion #suggestion_content_input p {
+  form#new_suggestion #suggestion_content_input {
     padding: 0;
     margin: 0;
-  }
-  form#new_suggestion #suggestion_content_input label {
-    display: none;
-  }
-  form#new_suggestion #suggestion_content_input input {
-    width: 99%;
     text-align: center;
-
-    padding: 2px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    border: 1px solid gray;
   }
-
-form#new_suggestion .buttons {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  position: relative;
-  top: -1em;
-  margin-bottom: -1em;
-}
-  form#new_suggestion .buttons li {
-    padding: 0.25em;
-    margin: 0;
-    float: right;
-  }
-    form#new_suggestion .buttons .create {
-      border: 0;
+    form#new_suggestion #suggestion_content_input p {
+      padding: 0;
       margin: 0;
-      padding: 0.25em;
-      background-color: gray;
-      color: white;
+    }
+    form#new_suggestion #suggestion_content_input label {
+      display: none;
+    }
+    form#new_suggestion #suggestion_content_input input {
+      width: 99%;
+      text-align: center;
 
+      padding: 2px;
       -moz-border-radius: 5px;
       -webkit-border-radius: 5px;
       border-radius: 5px;
       border: 1px solid gray;
-
-      cursor: pointer;
     }
+
+
+  form#new_suggestion .buttons {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    position: relative;
+    top: -1em;
+    margin-bottom: -1em;
+  }
+    form#new_suggestion .buttons li {
+      padding: 0.25em;
+      margin: 0;
+      float: right;
+    }
+      form#new_suggestion .buttons .create {
+        border: 0;
+        margin: 0;
+        padding: 0.25em;
+        background-color: gray;
+        color: white;
+
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        border: 1px solid gray;
+
+        cursor: pointer;
+      }
 
 
 /* END: Inline suggestion form */
