@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def current_protocol
+    request.protocol
+  end
+
   def inline
     params[:inline] == 'true' ? true : false
   end

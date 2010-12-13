@@ -9,6 +9,8 @@
 = stylesheet_link_tag 'style', 'formtastic', 'formtastic_changes', 'custom_scaffold', 'application', :cache => false # no caching for now while deplying to Heroku
 = stylesheet_link_tag 'print', :media => 'print'
 
-/[if IE] <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-%script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js')
+/[if IE]
+  %script{:src=>"#{current_protocol}html5shiv.googlecode.com/svn/trunk/html5.js"}
+%script(src="#{current_protocol}ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js")
+%link{:href => "#{current_protocol}fonts.googleapis.com/css?family=IM+Fell+Double+Pica", :rel => "stylesheet", :type => "text/css"}
 = javascript_include_tag 'rails', 'application'
