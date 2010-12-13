@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101206054406) do
+ActiveRecord::Schema.define(:version => 20101213234847) do
 
   create_table "project_participations", :id => false, :force => true do |t|
     t.integer  "user_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20101206054406) do
 
   create_table "suggestions", :force => true do |t|
     t.string   "content"
-    t.integer  "votes",      :default => 0
+    t.integer  "votes",      :default => 1
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -5,14 +5,14 @@ describe Suggestion do
     it { should belong_to(:project) }
   end
 
-  its(:votes) { should == 0 }
+  its(:votes) { should == 1 }
   it { should validate_presence_of(:project_id) }
   it { should ensure_length_of(:content).is_at_least(3).is_at_most(120) }
   its(:status) { should == :open }
 
   describe 'voting' do
     let(:project) { Factory(:project) }
-    subject { Factory(:suggestion, :project => project) }
+    subject { Factory(:suggestion, :project => project, :votes=>0) }
     def vote(value)
       subject.vote(value).should be_true
       subject.reload.votes
