@@ -98,7 +98,9 @@
   .connecty-tab-area .connecty-tab-area-content {
     min-height: 300px;
     height: 70%;    
-    padding: 5px;
+    padding: 7px;
+
+    background-color: #285EA6;
 
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
