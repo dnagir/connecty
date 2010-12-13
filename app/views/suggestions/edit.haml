@@ -4,6 +4,7 @@
   %nav
     %ul
       %li= link_to 'Copy to PivotalTracker', suggestion_pivotal_story_path(@suggestion.project, @suggestion)
+      %li= link_to 'Delete', project_suggestion_path(@suggestion.project, @suggestion), :method => :delete, :confirm => 'Are you sure?'
 = semantic_form_for [@suggestion.project, @suggestion] do |f|
   = f.inputs do
     = f.input :content

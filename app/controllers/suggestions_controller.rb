@@ -54,4 +54,10 @@ class SuggestionsController < ApplicationController
       redirect_to edit_project_suggestion_url(@suggestion.project, @suggestion), :notice => 'The suggestion was created as a Story.'
     end    
   end
+
+  def destroy
+    @project = @suggestion.project
+    @suggestion.destroy
+    redirect_to project_url(@project), :notice => 'Suggestion has been deleted.'
+  end
 end

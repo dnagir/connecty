@@ -1,10 +1,10 @@
 -@title = @suggestion.content_brief
 = semantic_form_for @story, :url=>suggestion_pivotal_story_path(@suggestion.project, @suggestion) do |f|
   = f.inputs :name => 'PivotalTracker story' do
-    = f.input :project_id, :label=>'Project ID', :hint=>'look at the address https://www.pivotaltracker.com/projects/12345 and copy/paste the number'
     = f.input :name, :hint=> 'story short name'
     = f.input :description
   = f.inputs :name => 'PivotalTracker authorisation' do
+    = f.input :project_id, :label=>'Project ID', :hint=>'look at the address https://www.pivotaltracker.com/projects/12345 and copy/paste the number'
     = f.input :email, :hint=>'email address you use to log-in to PivotalTracker'
     = f.input :password, :hint=>'password you use to log-in to PivotalTracker'
   = f.buttons

@@ -4,9 +4,10 @@ describe SuggestionsController do
   render_views
 
   let(:me) { Factory(:user) }
+  let(:project) { Factory(:project, :users=>[me]) }
+  let(:suggestion) { Factory(:suggestion, :project => project) }
 
   describe '#create' do
-    let(:project) { Factory(:project) }
     def do_create(inline=false, attrs={})
       post :create, :project_id => project.id, :inline => inline.to_s, :suggestion => Factory.attributes_for(:suggestion, attrs)
     end
@@ -76,7 +77,6 @@ describe SuggestionsController do
 
 
   context 'with user' do
-    let(:project) { Factory(:project, :users => [me]) }
     subject { Factory(:suggestion, :project => project) }
     before do
       sign_in me
@@ -132,8 +132,6 @@ describe SuggestionsController do
   end
 
   describe 'PivotalTracker' do    
-    let(:project) { Factory(:project, :users=>[me]) }
-    let(:suggestion) { Factory(:suggestion, :project => project) }
     def valid_story
       {'password'=>'123456', 'name'=>suggestion.content_brief, 'description'=>suggestion.content, 'email'=>me.email,'project_id'=>999}
     end
@@ -179,4 +177,26 @@ describe SuggestionsController do
     end
   end
 
+
+  describe '#destroy' do
+    def delete
+      post :destroy, :id => suggestion.id, :project_id => project.id
+    end
+
+    it 'should require authorisation' do
+      sign_in Factory(:user)
+      delete.should deny_access
+    end
+
+    context 'by authorised user' do
+      before do
+        sign_in me
+      end
+
+      it 'should redirect to project' do
+        delete.should redirect_to project_url(project)
+      end      
+    end
+
+  end
 end
