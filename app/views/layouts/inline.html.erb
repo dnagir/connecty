@@ -4,10 +4,14 @@
   <%= render 'layouts/page_header' %>
 </head>
 <body>
-  <%= render 'layouts/flash' %>
-  <!-- INLINE TEMPLATE -->
+  <div id='inline-page'>
+    <%= render 'layouts/flash' %>
+    <!-- INLINE TEMPLATE -->
 
-  <%= yield %>
-
+    <% if not @title.blank? %>
+      <h1><%= @title %></h1>
+    <% end %>
+    <%= yield %>
+  </div>
 </body>
 </html>

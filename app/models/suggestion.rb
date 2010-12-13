@@ -31,6 +31,14 @@ class Suggestion < ActiveRecord::Base
     Suggestion.status_name_for(status)
   end
 
+  def votes_positive?
+    votes > 0
+  end
+
+  def votes_negative?
+    votes < 0
+  end
+
   def vote(value)
     return true if not value or value == 0
     self.votes += value > 0 ? 1 : -1

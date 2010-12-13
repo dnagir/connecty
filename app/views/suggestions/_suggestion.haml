@@ -1,15 +1,16 @@
-.suggestion{:class=>suggestion.status}
+.suggestion{:class=>[suggestion.status, suggestion.votes_positive? ? 'positive' : nil, suggestion.votes_negative? ? 'negative' : nil]}
   .voting{:title=>'Votes'}
-    .current= suggestion.votes
     .up{:title=>'Like it!'}
       %a{:href=>suggestion_vote_path(suggestion.project, suggestion, :value=>1, :inline=>inline), :rel=>'nofollow'}
         %img{:alt=>'+', :src=> image_path('app/vote-up.png')}
     .dn{:title=>'Hate It!'}
       %a{:href=>suggestion_vote_path(suggestion.project, suggestion, :value=>-1, :inline=>inline), :rel=>'nofollow'}
         %img{:alt=>'-', :src=> image_path('app/vote-dn.png')}
-  %h5{:title => suggestion.status_readable }
-    - if can? :manage, suggestion
-      %a.edit{:href=>edit_project_suggestion_path(suggestion.project, suggestion)}= suggestion.content
-    - else
-      = suggestion.content
+    .current= suggestion.votes
+  .content
+    %h5{:title => suggestion.status_readable }
+      - if can? :manage, suggestion
+        %a.edit{:href=>edit_project_suggestion_path(suggestion.project, suggestion)}= suggestion.content
+      - else
+        = suggestion.content
   .clear

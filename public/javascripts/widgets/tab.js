@@ -18,7 +18,7 @@ var Connecty = function(){
     var $content = $('<div class="connecty-tab-area-content">').append(
       $('<iframe scrolling="yes" frameborder="0" allowtransparency="true"></iframe>').attr('src', getTabUrl())
     );
-    var $tools = $("<div class='connecty-tab-area-toolbar'><a href='#' class='connecty-tab-tool-close'><span>Close</span></a></div>");
+    var $tools = $("<div class='connecty-tab-area-toolbar'><a href='#' title='Close' class='connecty-tab-tool-close'><span>Close</span></a></div>");
     $('<div class="connecty-tab-area"></div>')
       .append($tools)
       .append($content)

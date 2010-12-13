@@ -79,7 +79,9 @@ div, section, article { padding: 0; margin: 0;}
     -o-transition-property: background-color;
     -o-transition-duration: 1s; 
 
-    height: 50px;
+    height: 3em;
+
+    background-color: white;
   }
     .suggestions .suggestion.in_progress {      
       color: #1E801B;
@@ -90,40 +92,52 @@ div, section, article { padding: 0; margin: 0;}
     }
 
   .suggestions .suggestion .voting {
-    float: left;
-    width: 70px;
-    height: 50px;
+    float: right;
+    display:table;
+    position:static;    
+    height: 3em;
+    width: 100px;
+
+    opacity: 0.8;
   }
-    .suggestions .suggestion .voting .current {
-      border-right: 1px solid gray;
-      width: 2em;
-      float: right;
-      text-align: right;
-      line-height: 50px;
-      margin-right: 5px;
-      font-size: 1.2em;
-    }
+    .suggestions .suggestion .voting .current,
     .suggestions .suggestion .voting .up,
     .suggestions .suggestion .voting .dn {
-      display: block;
-      width: 25px;
-      height: 25px;
+      display: inline;
+      display: table-cell;
+      vertical-align: middle;
+      position: static;
+      text-align: center;
     }
-      .suggestions .suggestion .voting .up img,
-      .suggestions .suggestion .voting .dn img {      
+    .suggestions .suggestion .voting .current {
+      font-size: 1.2em;
+      padding-right: 0.5em;
+    }
+      .suggestions .suggestion.positive .current {
+        color: green;
+        font-weight: bold;
+      }
+      .suggestions .suggestion.negative .current {
+        color: red;
+      }
+
+      .suggestions .suggestion .voting img {
         border: 0;
         margin: 0;
         padding: 0;
       }
-  .suggestions .suggestion h5 {
-    display: block;
-    float: left;
-    width: 500px;
-    overflow: auto;
-    height: 50px;
-    line-height: 50px;
-    margin: 0;
+  .suggestions .suggestion .content {
+    display:table;
+    position:static;    
+    height: 3em;
+    /* vertical-align-ing http://www.emblematiq.com/blog/vertical_align_with_css */
   }
-    .suggestions .suggestion h5 a {
-      color: inherit;
+    .suggestions .suggestion h5 {
+      display: table-cell;
+      vertical-align: middle;
+      position: static;
+      padding: 0 0.5em 0 0.5em;
     }
+      .suggestions .suggestion h5 a {
+        color: inherit;
+      }
