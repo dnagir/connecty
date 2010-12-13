@@ -8,8 +8,12 @@ h1 {
   color: inherit;
 }
 
+li {
+  margin: 0 0 0 1em;
+}
 nav li {
 	list-style-type: none;
+  margin: 0;
 }
   nav li a {
     color: #222222;
