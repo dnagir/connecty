@@ -10,6 +10,28 @@ How?
 3. That is it.
 
 
+What can I do with it?
+======================
+
+Users of a web site can:
+-------------------------------------------------
+
+- create suggestions;
+- no any registration required for them (so they are more likely to leave feedback for ya);
+- vote for existing suggestions;
+
+
+You, as an owner of a web site, can:
+------------------------------------
+- have multiple projects;
+- have multiple projects within one web site (thus feedback for different areas of the site);
+- use the same project across multiple web sites (so you can accumulate all the feedback in one place);
+- invite users to a project, so more people can moderate it;
+- mark suggestions as 'In-Progress', 'Done' etc, so that users can see how great you are responding to the feedback;
+- copy a suggestion to PivotalTracker as a Story, so that your team can actually start working on it;
+- more features are to come with *your help*, please leave some feedback for us.
+
+
 Just show me
 ============
 If you want to get the feel of it, we host the service at [connecty.heroku.com](http://connecty.heroku.com).
