@@ -6,6 +6,8 @@
       %li= link_to "Dashboard", dashboard_path
       %li= link_to "Invite to project", invite_project_path(@project)
       %li= link_to "Install Instructions", install_project_path(@project)
+      - if not @show_done.nil?
+        %li= link_to_toggle :show_done, @show_done, [:project_path, @project], :on=>'Hide Finished', :off=>'Show Finished'
 
 .project-view
   .suggestions

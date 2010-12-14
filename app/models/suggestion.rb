@@ -8,6 +8,7 @@ class Suggestion < ActiveRecord::Base
 
   scope :published, where(:status => [:open, :in_progress])
   scope :most_voted, order('votes DESC')
+  scope :active, where(:status => [:open, :in_progress])
 
   def self.statuses_readable
     STATUSES.inject({}) {|all, sym| all[status_name_for(sym)] = sym; all }

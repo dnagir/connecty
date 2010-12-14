@@ -8,6 +8,12 @@ module ApplicationHelper
     params[:inline] == 'true' ? true : false
   end
 
+  def link_to_toggle(name, value, url_data, args)
+    currently_on = !!value and value.to_s.downcase == 'true'
+    href = send(url_data.first, *url_data[1..-1], name=>(!currently_on).to_s)
+    link_to args[currently_on ? :on : :off], href
+  end
+
   def connecty_css_url
     uri = URI.parse(request.url)
     uri.merge(javascript_path('/stylesheets/widgets/tab.css'))

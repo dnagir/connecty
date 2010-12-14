@@ -23,6 +23,8 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @show_done = params[:show_done] == 'true'
+    @suggestions = @suggestions.active unless @show_done
   end
 
   def inline
