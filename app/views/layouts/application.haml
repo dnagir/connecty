@@ -36,5 +36,6 @@
           %li= link_to 'Dashboard', dashboard_path
         - else
           %li= link_to 'Sign In', new_user_session_path
-    = connecty_install_script(Project.first).html_safe
+    -# TODO move DB access out of here
+    = connecty_install_script(Project.order('created_at asc').first).html_safe
     / Free template downloaded from http://freehtml5templates.com
