@@ -66,7 +66,7 @@ describe ProjectsController do
         result.should redirect_to install_project_url(assigns[:project])
       end
 
-    end
+    end    
   end
 
 
@@ -237,5 +237,57 @@ describe ProjectsController do
     end
   end
 
+
+
+
+  describe '#edit' do    
+    def edit
+      get :edit, :id=>project.id
+    end
+    it 'should deny access to other users' do
+      sign_in Factory(:user)
+      edit.should deny_access
+    end
+
+    context 'by authorised user' do
+      before do
+        sign_in me
+      end
+      it 'should show project details' do
+        edit.should contain(project.name)
+      end
+      it 'should render form' do
+        edit.should have_selector('form')
+      end
+    end
+  end
+
+
+
+  describe '#update' do
+    def update(args={:name=>'new name'})
+      post :update, :id=>project.id, :project=>args
+    end
+    it 'should deny access to other users' do
+      sign_in Factory(:user)
+      update.should deny_access
+    end
+
+    context 'by authorised user' do
+      before do
+        sign_in me
+      end
+      it 'should redirect to #show' do
+        update.should redirect_to project_url(project)
+      end
+      it 'should update project' do
+        update
+        project.reload.name.should == 'new name'
+      end
+      it 'should render form with errors' do
+        update(:name=>'').should render_template :edit
+      end
+    end
+  end
 
 end

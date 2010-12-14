@@ -22,6 +22,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def edit    
+  end
+
+  def update    
+    if @project.update_attributes(params[:project])
+      redirect_to project_url(@project), :notice => 'Project has been updated.'
+    else
+      render :edit
+    end    
+  end
+
   def show
     @show_done = params[:show_done] == 'true'
     @suggestions = @suggestions.active unless @show_done
