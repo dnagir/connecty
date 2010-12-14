@@ -10,7 +10,8 @@ module ApplicationHelper
 
   def link_to_toggle(name, value, url_data, args)
     currently_on = !!value and value.to_s.downcase == 'true'
-    href = send(url_data.first, *url_data[1..-1], name=>(!currently_on).to_s)
+    url_data.push name=>(!currently_on).to_s
+    href = send(url_data.first, *url_data[1..-1])
     link_to args[currently_on ? :on : :off], href
   end
 
