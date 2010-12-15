@@ -159,17 +159,27 @@ describe SuggestionsController do
     def do_create
       post(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id, :integrations_pivotal_tracker_story => valid_story) 
     end
-    before do
-      story = Integrations::PivotalTracker::Story.new(valid_story)
-      story.stub(:valid?).and_return(true)
-      story.stub(:do_create!).and_return(true)
-      Integrations::PivotalTracker::Story.stub(:new).and_return(story)
+    let(:story) do
+      Integrations::PivotalTracker::Story.new(valid_story).tap do |s|
+        s.stub(:valid?).and_return(true)
+        s.stub(:do_create!).and_return(true)
+        Integrations::PivotalTracker::Story.stub(:new).and_return(s)
+      end
     end
 
-    it 'should require user' do
-
+    context 'with invalid user' do
+      before { sign_in Factory.create(:user) }
+      it "should prohibit to see details"     do do_get.should deny_access    end
+      it "should prohibit to push the story"  do do_create.should deny_access end
     end
 
+    context 'with a valid user' do
+      before { sign_in me }
+      it 'should push the story' do
+        story.should_receive(:do_create!)
+        do_create
+      end
+    end
   end
 
 
