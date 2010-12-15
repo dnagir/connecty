@@ -33,10 +33,7 @@ class SuggestionsController < ApplicationController
     @suggestion = Suggestion.find(params[:suggestion_id])
     can_vote = cookies[:voted].to_s.split(';').find {|s| s.to_i == @suggestion.id }.blank?
     notice = if can_vote
-      cookies[:voted] = {
-        :expires => 1.year.from_now,
-        :value => (cookies[:voted] || '') << ";#{@suggestion.id}"
-      }
+      cookies.permanent[:voted] = (cookies[:voted] || '') << ";#{@suggestion.id}"
       @suggestion.vote(params[:value].to_i)
       'Thanks for your vote!'
     else
