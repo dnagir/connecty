@@ -96,9 +96,7 @@ describe SuggestionsController do
 
   context 'with user' do
     subject { Factory(:suggestion, :project => project) }
-    before do
-      sign_in me
-    end
+    before { sign_in me }
 
     describe 'editing' do
       def edit
@@ -128,9 +126,7 @@ describe SuggestionsController do
       end
 
       context 'by another user' do
-        before do
-          sign_in Factory(:user)
-        end
+        before { sign_in Factory(:user) }
         it 'should not allow' do
           update
           response.should deny_access
@@ -185,9 +181,7 @@ describe SuggestionsController do
 
   context 'with user' do
     subject { Factory(:suggestion, :project => project) }
-    before do
-      sign_in me
-    end
+    before { sign_in me }
 
     describe 'editing' do
       def edit
@@ -217,9 +211,7 @@ describe SuggestionsController do
       end
 
       context 'by another user' do
-        before do
-          sign_in Factory(:user)
-        end
+        before { sign_in Factory(:user) }
         it 'should not allow' do
           update
           response.should deny_access
@@ -296,10 +288,7 @@ describe SuggestionsController do
     end
 
     context 'by authorised user' do
-      before do
-        sign_in me
-      end
-
+      before { sign_in me }
       it 'should redirect to project' do
         delete.should redirect_to project_url(project)
       end      
