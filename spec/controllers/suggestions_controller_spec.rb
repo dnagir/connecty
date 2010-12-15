@@ -73,6 +73,103 @@ describe SuggestionsController do
       }.to change { subject.reload.votes }.by(1)
     end
 
+    it 'should mark suggestion as voted by me' do
+      pending "haven't figured out how to get/set cookie"
+      vote(1)
+      cookies[:voted].should include suggestion.id.to_s
+    end
+
+    it 'should not vote twice' do
+      pending "haven't figured out how to get/set cookie"
+      cookies[:voted] = suggestion.id.to_s
+      expect { vote(1) }.to_not change { suggestion.votes }
+    end
+
+    it 'should explain why I cannot vote doing it twice' do
+      pending "haven't figured out how to get/set cookie"
+      cookies[:voted] = suggestion.id.to_s
+      vote(1)
+      flash[:notice].should match /already voted/
+    end
+  end
+
+
+  context 'with user' do
+    subject { Factory(:suggestion, :project => project) }
+    before do
+      sign_in me
+    end
+
+    describe 'editing' do
+      def edit
+        get(:edit, :project_id=>project.id, :id=>subject.id)
+      end
+
+      it 'should show form' do
+        edit.should have_selector('form') do |f|
+          f.should have_selector("input[name='suggestion[content]']")
+        end
+      end
+
+    end
+
+
+
+    describe 'updating' do
+      def update(attrs={})
+        post(:update, :project_id=>project.id, :id=>subject.id, :suggestion=>Factory.attributes_for(:suggestion, attrs))
+        assigns(:suggestion)
+      end
+      
+      it 'should ask to log-in' do
+        sign_out :user
+        update
+        response.should require_authentication
+      end
+
+      context 'by another user' do
+        before do
+          sign_in Factory(:user)
+        end
+        it 'should not allow' do
+          update
+          response.should deny_access
+        end
+      end
+      
+      it 'should redirect to project' do
+        update
+        response.should redirect_to project_url(project)
+      end
+
+      it 'should update attributes' do
+        update(:status=>:done).status.should == :done
+      end
+    end
+
+  end
+
+  describe 'PivotalTracker' do    
+    def valid_story
+      {'password'=>'123456', 'name'=>suggestion.content_brief, 'description'=>suggestion.content, 'email'=>me.email,'project_id'=>999}
+    end
+    def do_get
+      get(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id)
+    end
+    def do_create
+      post(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id, :integrations_pivotal_tracker_story => valid_story) 
+    end
+    before do
+      story = Integrations::PivotalTracker::Story.new(valid_story)
+      story.stub(:valid?).and_return(true)
+      story.stub(:do_create!).and_return(true)
+      Integrations::PivotalTracker::Story.stub(:new).and_return(story)
+    end
+
+    it 'should require user' do
+
+    end
+
   end
 
 

@@ -31,11 +31,22 @@ class SuggestionsController < ApplicationController
 
   def vote
     @suggestion = Suggestion.find(params[:suggestion_id])
-    @suggestion.vote(params[:value].to_i)
-    if inline?
-      redirect_to inline_project_url(@suggestion.project), :notice => 'Thanks for your vote!'
+    can_vote = cookies[:voted].to_s.split(';').find {|s| s.to_i == @suggestion.id }.blank?
+    notice = if can_vote
+      cookies[:voted] = {
+        :expires => 1.year.from_now,
+        :value => (cookies[:voted] || '') << ";#{@suggestion.id}"
+      }
+      @suggestion.vote(params[:value].to_i)
+      'Thanks for your vote!'
     else
-      redirect_to project_url(@suggestion.project), :notice => 'Thanks for your vote!'
+      'You have already voted for this suggestion before'
+    end
+
+    if inline?
+      redirect_to inline_project_url(@suggestion.project), :notice => notice
+    else
+      redirect_to project_url(@suggestion.project), :notice => notice
     end
   end
 
