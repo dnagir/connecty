@@ -7,6 +7,7 @@
       %li= link_to "Edit Project", edit_project_path(@project)
       %li= link_to "Invite to project", invite_project_path(@project)
       %li= link_to "Install Instructions", install_project_path(@project)
+      %li= link_to "Custom Fields", project_field_definitions_path(@project)
       - if not @show_done.nil?
         %li= link_to_toggle :show_done, @show_done, [:project_path, @project], :on=>'Hide Finished', :off=>'Show Finished'
 

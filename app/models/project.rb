@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
   has_many :project_participations, :dependent => :destroy
   has_many :users, :through => :project_participations, :autosave => true
   has_many :suggestions, :dependent => :destroy
+  has_many :field_definitions, :dependent => :destroy
 
   validates_length_of :name, :minimum => 3, :maximum => 25
 

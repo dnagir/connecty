@@ -14,6 +14,11 @@ Factory.define :project do |o|
   o.sequence(:name) {|n| "amazing project #{n}" }
 end
 
+Factory.define :field_definition do |o|
+  o.sequence(:name) {|n| "field_#{n}" }
+  o.sequence(:value) {|n| "window.location.href + #{n}" }
+end
+
 Factory.define :suggestion do |o|
   o.content { Factory.next(:comment) } 
   o.association :project

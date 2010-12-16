@@ -1,0 +1,8 @@
+-@title = "Edit #{@field_definition.name}"
+= content_for :context do
+  %h3 Actions
+  %nav
+    %ul
+      %li= link_to 'All fields', project_field_definitions_path(@project)
+      %li= link_to 'Delete', project_field_definition_path(@project, @field_definition), :method => :delete, :confirm => 'Are you sure?'
+= render 'form'

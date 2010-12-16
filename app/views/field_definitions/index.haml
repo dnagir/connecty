@@ -1,0 +1,20 @@
+-@title = "#{@project.name} fields"
+= content_for(:context) do
+  %h3 Actions
+  %nav
+    %ul
+      %li= link_to "Back to Project", project_path(@project)
+      %li= link_to "Add field", new_project_field_definition_path(@project)
+
+:markdown
+  Custom fields provide you the ability to attach arbitrary data when a suggestion is submitted by a user.
+
+  Each custom field will be evaluated as a JavaScript on your page. For example,
+  if you want to know from which URL (web page address) the suggestion has been submitted from, you can add custom field:
+
+  `url` with `value` equal to `window.location`.
+
+- if @field_definitions.empty?
+  %h3= link_to "No custom fields in this project yet, add one...", new_project_field_definition_path(@project)
+.field_definitions
+  = render @field_definitions

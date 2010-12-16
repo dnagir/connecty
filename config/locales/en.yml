@@ -9,6 +9,9 @@ en:
     hints:
       suggestion:
         content: "your feedback"
+      field_definition:
+        name: 'examples: url, screen_size, page_size'
+        value: 'JavaScript to calculate the value. For example: "window.location"'
     actions:
       suggestion:
         create: "Submit"

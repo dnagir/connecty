@@ -1,0 +1,9 @@
+.field_definition
+  .name
+    %h3= field_definition.name
+  .value
+    %code
+      %pre= field_definition.value
+  .action
+    = link_to 'Edit', edit_project_field_definition_path(@project, field_definition)
+  .clear

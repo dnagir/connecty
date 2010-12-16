@@ -11,6 +11,7 @@ Connecty::Application.routes.draw do
       get 'inline'
       match 'invite', :via => [:get, :post]
     end
+    resources :field_definitions
     resources :suggestions do
       match 'vote', :via => [:get, :post]
       match 'pivotal_story', :via => [:get, :post]

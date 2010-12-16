@@ -2,10 +2,7 @@
 shared_examples_for "protected action" do |args = {}|
 
   def run_protected_action
-    action_name = [:act, :result, :edit, :update, :create, :new, :destroy, :delete].find do |action|
-      respond_to? action
-    end
-    send(action_name)
+    send([:act, :result, :index, :edit, :update, :create, :new, :destroy, :delete].find {|a| respond_to? a})
   end
 
   it "should ask to log-in" do

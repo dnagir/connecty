@@ -1,0 +1,9 @@
+-@title = 'Define a New Custom Field'
+= content_for :context do
+  %h3 Actions
+  %nav
+    %ul
+      %li= link_to 'All fields', project_field_definitions_path(@project)
+
+= render 'form'
+

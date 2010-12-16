@@ -39,4 +39,17 @@ describe Ability do
 
   end
 
+  describe 'managing field definitions' do
+    let(:field) { Factory(:field_definition, :project => my_project) }
+
+    
+    it 'should allow owner to manage his field' do
+      subject.should be_able_to(:manage, field)
+    end
+
+    it 'should not allow to manage not owning field' do
+      subject.should_not be_able_to(:manage, Factory(:field_definition, :project=>Factory(:project)))
+    end
+
+  end
 end

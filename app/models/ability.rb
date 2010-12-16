@@ -10,5 +10,9 @@ class Ability
     can :manage, Suggestion do |suggestion|
       suggestion.project.users.include?(user)
     end
+
+    can :manage, FieldDefinition do |field|
+      field.project.users.include?(user)
+    end
   end
 end

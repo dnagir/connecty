@@ -224,3 +224,14 @@ form#new_suggestion .inputs {
       .suggestions .suggestion h5 a {
         color: inherit;
       }
+
+
+
+
+
+
+
+.field_definitions {}
+  .field_definitions .field_definition {
+    border: 1px solid gray;
+  }

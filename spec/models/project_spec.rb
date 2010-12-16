@@ -5,6 +5,7 @@ describe Project do
     it { should have_many(:users).through(:project_participations) }
     it { should have_many(:project_participations).dependent(:destroy) }
     it { should have_many(:suggestions).dependent(:destroy) }
+    it { should have_many(:field_definitions).dependent(:destroy) }
   end
   
   describe 'basic validation' do
