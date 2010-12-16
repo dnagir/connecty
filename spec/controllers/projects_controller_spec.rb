@@ -7,66 +7,36 @@ describe ProjectsController do
   let(:project) { Factory.create(:project, :users => [me]) }
 
   describe '#new' do
-    def result
+    def act
       get :new
     end
 
-    context 'as anonim' do
-      before do
-        sign_out :user
-      end
+    it_behaves_like 'protected action', :with => :no_resource
 
-      it 'should ask to log-in' do
-        result.should require_authentication
-      end
+    it 'should render form' do
+      sign_in me
+      act.should have_selector("form[action='#{projects_path}']")
     end
-
-    context 'as a user' do
-      before do
-        sign_in me
-      end
-
-      it 'should render form' do
-        result.should have_selector("form[action='#{projects_path}']")
-      end
-
-    end
-
   end
 
 
   describe '#create' do
-    def result
+    def act
       post :create, :project => Factory.attributes_for(:project)
     end
 
-    context 'as anonim' do
-      before do
-        sign_out :user
-      end
-
-      it 'should ask to log-in' do
-        result.should require_authentication
-      end
-
-    end
+    it_behaves_like 'protected action', :with => :no_resource
 
     context 'as a user' do
-      before do
-        sign_in me
-      end
-
+      before { sign_in me }
       it 'should create a project' do
-        expect {
-          result();
-        }.to change { me.projects(true).count }.by(1)
+        expect { act }.to change { me.projects(true).count }.by(1)
       end
 
       it 'should redirect to the install instructions' do
-        result.should redirect_to install_project_url(assigns[:project])
+        act.should redirect_to install_project_url(assigns[:project])
       end
-
-    end    
+    end
   end
 
 
@@ -82,20 +52,10 @@ describe ProjectsController do
       get :show, { :id => project.id }.merge(more)
     end
 
-    it 'should ask to log-in' do
-      sign_out :user
-      result.should require_authentication
-    end
+    it_behaves_like 'protected action'
 
     context 'as logged-in user' do
-      before do
-        sign_in me
-      end
-
-      it 'should not see other projects' do
-        sign_in Factory(:user)
-        result.should deny_access
-      end
+      before { sign_in me }
 
       it 'should show project name' do
         result.should contain project.name
@@ -171,33 +131,16 @@ describe ProjectsController do
       get :install, :id => project.id
     end
 
-    context 'as anonim' do
-      before do
-        sign_out :user
-      end
-
-      it 'should ask to log-in' do
-        result.should require_authentication
-      end
-
-    end
+    it_behaves_like 'protected action'
 
     context 'as a user' do
-      before do
-        sign_in me
-      end
+      before { sign_in me }
 
       it { result.should be_successful }
 
-      it 'should not see other projects' do
-        sign_in Factory(:user)
-        result.should deny_access
-      end
-      
       it 'should have installation code' do
         result.should have_selector('pre')
       end
-
     end
 
   end
@@ -206,32 +149,34 @@ describe ProjectsController do
 
 
   describe '#invite' do
-    def result
-      get(:invite, :id => project.id)
-    end
-    def do_invite
-      email = Factory(:user).email
-      post :invite, :id => project.id, :user => { :email => email}
-    end
 
-    it 'should ask to log-in' do
-      result.should require_authentication
-    end
-
-    context 'as logged-in user' do
-      before do
-        sign_in me
+    context "#get" do
+      def result
+        get(:invite, :id => project.id)
       end
 
-      it 'should render form with emails' do
+      it_behaves_like 'protected action'
+
+      it 'should render form with email' do
+        sign_in me
         result.should have_selector('form') do |f|
           f.should have_selector('input[name="user[email]"]')
           f.should have_selector('input[type="submit"]')
         end
       end
+    end
+
+    context 'as logged-in user' do
+      def act
+        email = Factory(:user).email
+        post :invite, :id => project.id, :user => { :email => email}
+      end
+
+      it_behaves_like 'protected action'
 
       it 'should redirect to project after adding' do
-        do_invite.should redirect_to project_url(project)
+        sign_in me
+        act.should redirect_to project_url(project)
       end
 
     end
@@ -241,23 +186,19 @@ describe ProjectsController do
 
 
   describe '#edit' do    
-    def edit
+    def result
       get :edit, :id=>project.id
     end
-    it 'should deny access to other users' do
-      sign_in Factory(:user)
-      edit.should deny_access
-    end
+
+    it_behaves_like 'protected action'
 
     context 'by authorised user' do
-      before do
-        sign_in me
-      end
+      before { sign_in me }
       it 'should show project details' do
-        edit.should contain(project.name)
+        result.should contain(project.name)
       end
       it 'should render form' do
-        edit.should have_selector('form')
+        result.should have_selector('form')
       end
     end
   end
@@ -268,15 +209,11 @@ describe ProjectsController do
     def update(args={:name=>'new name'})
       post :update, :id=>project.id, :project=>args
     end
-    it 'should deny access to other users' do
-      sign_in Factory(:user)
-      update.should deny_access
-    end
+
+    it_behaves_like 'protected action'
 
     context 'by authorised user' do
-      before do
-        sign_in me
-      end
+      before { sign_in me }
       it 'should redirect to #show' do
         update.should redirect_to project_url(project)
       end

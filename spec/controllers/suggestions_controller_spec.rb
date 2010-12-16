@@ -8,41 +8,39 @@ describe SuggestionsController do
   let(:suggestion) { Factory(:suggestion, :project => project) }
 
   describe '#create' do
-    def do_create(inline=false, attrs={})
+    def act(inline=false, attrs={})
       post :create, :project_id => project.id, :inline => inline.to_s, :suggestion => Factory.attributes_for(:suggestion, attrs)
     end
 
     it 'should create suggestion' do
-      expect {
-        do_create
-      }.to change { project.reload.suggestions.count }.by(1)
+      expect { act }.to change { project.reload.suggestions.count }.by(1)
     end
 
     it 'should redirect to the project' do
-      do_create.should redirect_to project_path(project)
+      act.should redirect_to project_path(project)
     end
     it 'should redirect preserving inline option' do
-      do_create(true).should redirect_to inline_project_path(project)
+      act(true).should redirect_to inline_project_path(project)
     end
 
 
     context 'with invalid suggestion' do
-      def do_invalid(inline=false)
-        do_create inline, :content => nil
+      def act(inline=false)
+        post :create, :project_id => project.id, :inline => inline.to_s, :suggestion => Factory.attributes_for(:suggestion, :content=>nil)
       end
 
-      it { do_invalid.should render_template('new') }
+      it { act.should render_template('new') }
 
       it 'should not create suggestion' do
-        expect { do_invalid }.to change {project.suggestions.count}.by(0)
+        expect { act }.to change {project.suggestions.count}.by(0)
       end
       
       it 'should render page preserving inline option' do
-        do_invalid(true).should have_selector("input[name='inline']")
+        act(true).should have_selector("input[name='inline']")
       end
 
       it 'should render page inline' do
-        do_invalid(true).should render_template(:inline)
+        act(true).should render_template(:inline)
       end
 
     end
@@ -114,32 +112,20 @@ describe SuggestionsController do
 
 
     describe 'updating' do
-      def update(attrs={})
+      def act(attrs={})
         post(:update, :project_id=>project.id, :id=>subject.id, :suggestion=>Factory.attributes_for(:suggestion, attrs))
         assigns(:suggestion)
       end
-      
-      it 'should ask to log-in' do
-        sign_out :user
-        update
-        response.should require_authentication
-      end
 
-      context 'by another user' do
-        before { sign_in Factory(:user) }
-        it 'should not allow' do
-          update
-          response.should deny_access
-        end
-      end
+      it_behaves_like 'protected action'
       
       it 'should redirect to project' do
-        update
+        act
         response.should redirect_to project_url(project)
       end
 
       it 'should update attributes' do
-        update(:status=>:done).status.should == :done
+        act(:status=>:done).status.should == :done
       end
     end
 
@@ -163,15 +149,17 @@ describe SuggestionsController do
       end
     end
 
-    context 'with invalid user' do
-      before { sign_in Factory.create(:user) }
-      it "should prohibit to see details"     do do_get.should deny_access    end
-      it "should prohibit to push the story"  do do_create.should deny_access end
+    describe '#get' do
+      alias :act :do_get
+      it_behaves_like 'protected action'
     end
 
-    context 'with a valid user' do
-      before { sign_in me }
+    describe '#create' do
+      alias :act :do_create
+      it_behaves_like 'protected action'
+
       it 'should push the story' do
+        sign_in me
         story.should_receive(:do_create!)
         do_create
       end
@@ -198,33 +186,22 @@ describe SuggestionsController do
 
 
 
-    describe 'updating' do
-      def update(attrs={})
+    describe '#update' do
+      def act(attrs={})
         post(:update, :project_id=>project.id, :id=>subject.id, :suggestion=>Factory.attributes_for(:suggestion, attrs))
         assigns(:suggestion)
       end
-      
-      it 'should ask to log-in' do
-        sign_out :user
-        update
-        response.should require_authentication
-      end
-
-      context 'by another user' do
-        before { sign_in Factory(:user) }
-        it 'should not allow' do
-          update
-          response.should deny_access
-        end
-      end
+      it_behaves_like 'protected action'
       
       it 'should redirect to project' do
-        update
+        sign_in me
+        act
         response.should redirect_to project_url(project)
       end
 
       it 'should update attributes' do
-        update(:status=>:done).status.should == :done
+        sign_in me
+        act(:status=>:done).status.should == :done
       end
     end
 
@@ -234,12 +211,6 @@ describe SuggestionsController do
     def valid_story
       {'password'=>'123456', 'name'=>suggestion.content_brief, 'description'=>suggestion.content, 'email'=>me.email,'project_id'=>999}
     end
-    def do_get
-      get(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id)
-    end
-    def do_create
-      post(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id, :integrations_pivotal_tracker_story => valid_story) 
-    end
     before do
       story = Integrations::PivotalTracker::Story.new(valid_story)
       story.stub(:valid?).and_return(true)
@@ -247,52 +218,50 @@ describe SuggestionsController do
       Integrations::PivotalTracker::Story.stub(:new).and_return(story)
     end
 
-    it 'should require user' do
-      sign_out :user
-      do_get.should require_authentication
-    end
-    it 'should require authorisation' do
-      sign_in Factory(:user)
-      do_get.should deny_access
+    describe '#new' do
+      def act
+        get(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id)
+      end
+      it_behaves_like 'protected action'
+
+      it 'should render form' do
+        sign_in me
+        act.should have_selector('form')
+      end
+
+      it 'should prefil story' do
+        sign_in me; act
+        story = assigns(:story)
+        story.name.should == suggestion.content_brief
+        story.description.should == suggestion.content
+        story.email.should == me.email
+      end
     end
 
-    it 'should render form' do
-      sign_in me
-      do_get.should have_selector('form')
-    end
+    describe '#create' do
+      def act
+        post(:pivotal_story, :project_id=>project.id, :suggestion_id=>suggestion.id, :integrations_pivotal_tracker_story => valid_story) 
+      end
+      it_behaves_like 'protected action'
 
-    it 'should prefil story' do
-      sign_in me
-      do_get
-      story = assigns(:story)
-      story.name.should == suggestion.content_brief
-      story.description.should == suggestion.content
-      story.email.should == me.email
-    end
-
-    it 'should redirect to edit suggestion' do
-      sign_in me
-      do_create.should redirect_to edit_project_suggestion_url(project, suggestion)
+      it 'should redirect to edit suggestion' do
+        sign_in me
+        act.should redirect_to edit_project_suggestion_url(project, suggestion)
+      end
     end
   end
 
 
   describe '#destroy' do
-    def delete
+    def act
       post :destroy, :id => suggestion.id, :project_id => project.id
     end
 
-    it 'should require authorisation' do
-      sign_in Factory(:user)
-      delete.should deny_access
-    end
+    it_behaves_like 'protected action'
 
-    context 'by authorised user' do
-      before { sign_in me }
-      it 'should redirect to project' do
-        delete.should redirect_to project_url(project)
-      end      
-    end
-
+    it 'should redirect to project' do
+      sign_in me
+      act.should redirect_to project_url(project)
+    end      
   end
 end

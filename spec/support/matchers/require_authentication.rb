@@ -1,14 +1,16 @@
 RSpec::Matchers.define :require_authentication do
   match do |response|
-    response.should redirect_to '/users/sign_in' # cannot use Rails url-helpers for some reason
+    @response = response
+    [301, 302].include?(response.status) and 
+      response.headers['Location'].to_s =~ /\/users\/sign_in/
   end
 
   failure_message_for_should do |actual|
-    "expected to require authentication, but was #{actual.headers}"
+    "expected to require authentication, but was #{@response.status} with #{actual.headers}"
   end
 
   failure_message_for_should_not do |actual|
-    "expected NOT to require authentication, but was #{actual.headers}"
+    "expected NOT to require authentication, but was #{@response.status} with #{actual.headers}"
   end
 
   description do
