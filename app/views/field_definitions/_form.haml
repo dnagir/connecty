@@ -1,3 +1,14 @@
+:markdown
+  Each field is a pair of `name-value`.
+
+  - `name` will be used as identify the custom field in the project and should be unique.
+  - `value` is a JavaScript code that will be executed on your page just before user submits the suggestion.
+
+  Examples:
+  --------
+  - `url`: script can be: `window.location`
+
+
 = semantic_form_for [@project, @field_definition] do |f|
   = f.inputs do
     = f.input :name
