@@ -5,7 +5,12 @@ class ApplicationController < ActionController::Base
 
   protected
     def pick_layout
-      inline? ? 'inline' : 'application'
+      if inline?
+        headers['P3P'] = 'CP="IDC DSP COR CURa ADMa OUR IND PHY ONL COM STA"'
+        'inline'
+      else
+        'application'
+      end
     end
 
     def inline?
