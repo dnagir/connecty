@@ -4,14 +4,18 @@
 en:
   formtastic:
     labels:
+      project:
+        show_name: "Show project name?"
       suggestion:
         content: "I suggest to"    
     hints:
+      project:
+        prompt: "short message for a user near the suggestion box (can be blank)"
       suggestion:
         content: "your feedback"
       field_definition:
         name: 'examples: url, screen_size, page_size'
-        value: 'JavaScript to calculate the value. For example: "window.location"'
+        value: 'JavaScript to calculate the value. For example: window.location'
     actions:
       suggestion:
         create: "Submit"
