@@ -11,7 +11,7 @@ class SuggestionsController < ApplicationController
       redirecting_to = inline? ? inline_project_url(@project) : project_path(@project)
       redirect_to redirecting_to, :notice => 'Thanks. We appreciate your feedback.'
     else
-      @suggestions = @project.suggestions.most_voted
+      @suggestions = @project.suggestions.published
       render :new
     end
   end
