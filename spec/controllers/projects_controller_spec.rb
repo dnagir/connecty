@@ -94,6 +94,18 @@ describe ProjectsController do
       result.should contain project.name
     end
 
+    it 'should not show project name when disabled' do
+      project.show_name = false
+      project.save!
+      result.should_not contain project.name
+    end
+
+    it 'should show prompt' do
+      project.prompt = 'just say something'
+      project.save!
+      result.should contain 'just say something'
+    end
+
     it 'should list suggestions' do
       result.should have_selector('div.suggestion', :count => 3)
     end

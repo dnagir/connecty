@@ -1,5 +1,4 @@
 -@title = @project.name
 = semantic_form_for @project do |f|
-  = f.inputs do
-    = f.input :name
+  = f.inputs :name, :show_name, :prompt
   = f.buttons

@@ -1,8 +1,8 @@
--@title = @project.name
+-@title = @project.name if @project.show_name?
 = semantic_form_for [@project, @suggestion] do |f|
   = f.inputs do
     = hidden_field_tag 'inline', params[:inline]
-    = f.input :content, :input_html => {:autofocus=>true, :placeholder=>'your feedback'}
+    = f.input :content, :hint => @project.prompt.blank? ? '&nbsp;' : @project.prompt, :input_html => {:autofocus=>true, :placeholder=>@project.prompt}
     = f.buttons
 
 .suggestions

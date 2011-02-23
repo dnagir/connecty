@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223015821) do
+ActiveRecord::Schema.define(:version => 20110223071323) do
 
   create_table "field_definitions", :force => true do |t|
     t.string  "name"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(:version => 20110223015821) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "prompt",     :default => "your feedback"
+    t.boolean  "show_name",  :default => true
   end
 
   create_table "suggestions", :force => true do |t|

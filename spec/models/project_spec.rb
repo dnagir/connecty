@@ -7,6 +7,9 @@ describe Project do
     it { should have_many(:suggestions).dependent(:destroy) }
     it { should have_many(:field_definitions).dependent(:destroy) }
   end
+
+  its(:show_name) { should == true }
+  its(:prompt) { should == 'your feedback' }
   
   describe 'basic validation' do
     it { should ensure_length_of(:name).is_at_least(3).is_at_most(25) }
