@@ -17,7 +17,7 @@ describe FieldDefinition do
         f.should have(1).error_on(:name)
       end
     end
-    it 'should allow same name for different project' do
+    it 'should allow same name for different projects' do
       FieldDefinition.new(:name=>existing.name, :project=>Factory(:project)).tap do |f|
         f.valid?
         f.should have(:no).error_on(:name)
