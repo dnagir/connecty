@@ -18,6 +18,7 @@ class SuggestionsController < ApplicationController
 
   def edit    
     @suggestion = Suggestion.find(params[:id])
+    @field_values = @suggestion.field_values.order(:name)
   end
 
   def update

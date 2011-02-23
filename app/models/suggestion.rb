@@ -1,5 +1,6 @@
 class Suggestion < ActiveRecord::Base
   belongs_to :project
+  has_many :field_values, :dependent => :destroy
 
   validates_presence_of :project_id
   validates_length_of :content, :within => 3..120

@@ -231,7 +231,8 @@ form#new_suggestion .inputs {
 
 
 
-.field_definitions {}
-  .field_definitions .field_definition {
+.field_definitions, .field-values {}
+  .field_definitions .field_definition,
+  .field-values .field-value {
     border: 1px solid gray;
   }

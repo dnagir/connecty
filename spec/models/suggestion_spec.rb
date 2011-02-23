@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Suggestion do
   describe 'associations' do
     it { should belong_to(:project) }
+    it { should have_many(:field_values).dependent(:destroy) }
   end
 
   its(:votes) { should == 1 }

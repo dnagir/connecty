@@ -5,8 +5,16 @@
     %ul
       %li= link_to 'Copy to PivotalTracker', suggestion_pivotal_story_path(@suggestion.project, @suggestion)
       %li= link_to 'Delete', project_suggestion_path(@suggestion.project, @suggestion), :method => :delete, :confirm => 'Are you sure?'
+
 = semantic_form_for [@suggestion.project, @suggestion] do |f|
   = f.inputs do
     = f.input :content
     = f.input :status, :collection => Suggestion.statuses_readable
   = f.buttons
+%hr
+
+%h2 Custom values
+.field-values
+  = render @field_values
+  - if @field_values.empty?
+    .no-data No custom values here... Try to edit Project Custom Fields so that custom value will be added for new suggestions.

@@ -182,6 +182,13 @@ describe SuggestionsController do
         end
       end
 
+      it 'should show custom values' do
+        subject.field_values.create(:name=>'url', :value=>'google.com')
+        edit.should have_selector('.field-value') do |v|
+          v.should contain('google.com')
+        end
+      end
+
     end
 
 
