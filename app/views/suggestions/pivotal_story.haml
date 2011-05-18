@@ -1,5 +1,5 @@
 -@title = @suggestion.content_brief
-= semantic_form_for @story, :url=>suggestion_pivotal_story_path(@suggestion.project, @suggestion) do |f|
+= semantic_form_for @story, :url=>project_suggestion_pivotal_story_path(@suggestion.project, @suggestion) do |f|
   = f.inputs :name => 'PivotalTracker story' do
     = f.input :name, :hint=> 'story short name'
     = f.input :description
