@@ -1,5 +1,5 @@
-set :application,     "connecty"
 set :domain,          ENV["domain"]
+set :application,     domain
 set :user,            ENV["user"]
 set :destination,     ENV["destination"] || domain
 set :web_conf,        ENV["web_conf"]    || ENV["environment"] || 'production'

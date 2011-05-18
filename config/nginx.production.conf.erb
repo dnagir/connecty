@@ -1,14 +1,24 @@
 
-   server {
-      listen 80;
-      listen 443;
-      server_name <%= domain %>;
-      ssl on;
-      ssl_certificate     <%= "#{shared_path}/ssl/ssl.crt" %>;
-      ssl_certificate_key <%= "#{shared_path}/ssl/ssl.key" %>;
+server {
+  listen 80;
+  listen 443;
+  ssl on;
+  server_name <%= domain %>;
+  ssl_certificate     <%= "#{shared_path}/ssl/ssl.crt" %>;
+  ssl_certificate_key <%= "#{shared_path}/ssl/ssl.key" %>;
 
-      root <%= "#{current_path}/public" %>;      
-      #try_files /system/maintenance.html $uri $uri/index.html $uri.html @app;
-      index index.html;
-      passenger_enabled on;
-   }
+  root <%= "#{current_path}/public" %>;      
+  passenger_enabled on;
+
+  index index.html;
+
+  # maintenance page with proper 503 status
+  if (-f $document_root/system/maintenance.html) {
+    return 503;
+  }
+  error_page 503 @maintenance;
+  location @maintenance {
+    rewrite ^(.*)$ /system/maintenance.html break;
+  }
+
+}
