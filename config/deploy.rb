@@ -38,6 +38,9 @@ task :preconfigure, :roles => :app do
   run "touch #{release_path}/db/production.sqlite3" # make sure at least empty file exists so it can be copied
   run "cp #{release_path}/db/production.sqlite3 #{release_path}/db/production.sqlite3.backup"
 
+  # create the dir for SSL if it doesn't exist
+  run "mkdir -p #{shared_path}/ssl/"
+
   # Compile SCSS
   #run "cd #{latest_release}; bundle exec compass compile #{release_path}"
 
