@@ -1,5 +1,8 @@
 Connecty::Application.routes.draw do
   
+  match "(*path)" => redirect {|params, req| "#{req.protocol}connecty.approache.com/#{params[:path]}"},
+    :constraints => { :host => /heroku/ }
+
   resource :dashboard
 
   devise_for :users

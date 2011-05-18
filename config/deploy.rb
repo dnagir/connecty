@@ -33,9 +33,6 @@ task :preconfigure, :roles => :app do
   # symlink database.yml: copy if not exists, then link it back (release/config/database.yml -> shared/database.yml)
   run "cp -n #{release_path}/config/database.yml #{shared_path}"
   run "ln -sf #{shared_path}/database.yml #{release_path}/config/database.yml"
-  # create and symlink configuration file
-  run "cp -n #{release_path}/config/configatron/production.rb #{shared_path}"
-  run "ln -sf #{shared_path}/production.rb #{release_path}/config/configatron/production.rb"
   # symlink database file and backup current one
   run "ln -sf #{shared_path}/production.sqlite3 #{release_path}/db/production.sqlite3"
   run "touch #{release_path}/db/production.sqlite3" # make sure at least empty file exists so it can be copied
