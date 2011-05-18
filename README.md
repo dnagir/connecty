@@ -66,12 +66,12 @@ MIT
 
 Who is using?
 ================
-- [PropConnect Pty Ltd](http://propconnect.com).
-- [Approach Excellence](http://ApproachE.com).
+- [PropConnect Pty Ltd](http://www.propconnect.com).
+- [Approach Excellence](http://www.ApproachE.com).
 - [Blog of @dnagir](http://blog.ApproachE.com).
 
 
 Credits
 =================
-Supported and sponsored by [PropConnect Pty Ltd](http://propconnect.com).
-Maintener: [Dmytrii Nagirniak](http://ApproachE.com).
+Supported and sponsored by [PropConnect Pty Ltd](http://www.propconnect.com).
+Maintened by [Dmytrii Nagirniak](http://ApproachE.com).
