@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.7'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
@@ -12,7 +12,7 @@ gem 'formtastic'
 gem "cancan"
 
 group :test do
-  gem 'webrat', '0.7.1' # https://github.com/rspec/rspec-rails/issues#issue/140
+  gem 'webrat'
   gem 'shoulda'
   gem 'factory_girl_rails'
   gem 'rcov'
