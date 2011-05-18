@@ -58,7 +58,7 @@ A user must run a modern browser.
 No specific requirement for a web site to use Connecty.
 Server running Connecty is Rails 3 compatible with RDBMS.
 
-If SSL is required then `cert.prm` and `key.pem` files should be added manually to `shared/ssl`.
+SSL is required and `ssl.crt` and `ssl.key` files should be added manually to `shared/ssl`.
 
 
 License

@@ -6,7 +6,7 @@ set :web_conf,        ENV["web_conf"]    || ENV["environment"] || 'production'
 raise "please set domain=app.domain.name.com" unless domain
 raise "please set user=server_username"       unless user
 
-set :port,            (ENV["port"] || 9999)
+set :port,            ENV["port"] || 9999
 set :repository,      "."
 set :scm,             :git
 set :deploy_via,      :copy   # copy code over to server, no need to configure scm on the server
