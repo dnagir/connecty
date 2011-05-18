@@ -1,0 +1,9 @@
+
+   server {
+      listen 80;
+      server_name <%= domain %>;
+      root <%= "#{current_path}/public" %>;      
+      #try_files /system/maintenance.html $uri $uri/index.html $uri.html @app;
+      #index index.html index.html;
+      passenger_enabled on;
+   }
